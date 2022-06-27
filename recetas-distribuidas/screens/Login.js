@@ -8,55 +8,57 @@ const Login = ({ navigation }) => {
     const [textPass, onChangeTextPass] = React.useState("");
 
     return (
-        <View style={{ backgroundColor: '#F4F4F4', height: 'auto'}}>
-            <Image source={require('../media/imgLogin.png')} style={{ width: '100%', height: 300 }} />
+        <View style={styles.container}>
+            <SafeAreaView>
+                <Image source={require('../media/imgLogin.png')} style={{ width: '100%', height: 250 }} />
 
-            <View style={{
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'center'
-            }}>
                 <View style={{
                     display: 'flex',
-                    width: '80%',
-                    marginTop: 10,
-                    height: 150,
                     flexDirection: 'column',
-                    justifyContent: 'space-around'
+                    justifyContent: 'center',
+                    alignItems: 'center'
                 }}>
-                    <SafeAreaView>
-                        <TextInput
-                            style={styles.input}
-                            onChangeText={onChangeText}
-                            value={text}
-                            placeholder="Usuario"
-                        />
-                        <TextInput
-                            style={styles.input}
-                            onChangeText={onChangeTextPass}
-                            value={textPass}
-                            secureTextEntry={true}
-                            placeholder="Contraseña"
-                        />
-                    </SafeAreaView>
-                </View>
-                <Pressable onPress={() => Alert.alert('Simple Button pressed')} title="Login" >
-                    <Text style={styles.textMeOlvideContra} >Me olvide la Contraseña</Text>
-                </Pressable>
-                <View>
-                    <Pressable onPress={() => Alert.alert('Simple Button pressed')} title="Login" style={styles.bttnLogin} >
-                        <Text style={styles.textLogin} >Login</Text>
-                    </Pressable>
-                </View>
-
-                <View style={styles.fixToText}>
-                    <Text>No tenes cuenta?</Text>
+                    <View style={{
+                        display: 'flex',
+                        width: '80%',
+                        marginTop: 10,
+                        height: 150,
+                        flexDirection: 'column',
+                        justifyContent: 'space-around'
+                    }}>
+                        <SafeAreaView >
+                            <TextInput
+                                style={styles.input}
+                                onChangeText={onChangeText}
+                                value={text}
+                                placeholder="Usuario"
+                            />
+                            <TextInput
+                                style={styles.input}
+                                onChangeText={onChangeTextPass}
+                                value={textPass}
+                                secureTextEntry={true}
+                                placeholder="Contraseña"
+                            />
+                        </SafeAreaView>
+                    </View>
                     <Pressable onPress={() => Alert.alert('Simple Button pressed')} title="Login" >
-                        <Text style={styles.textCrear}>  Crear</Text>
+                        <Text style={styles.textMeOlvideContra} >Me olvide la Contraseña</Text>
                     </Pressable>
+                    <View>
+                        <Pressable onPress={() => navigation.navigate('Home')} title="Login" style={styles.bttnLogin} >
+                            <Text style={styles.textLogin} >Login</Text>
+                        </Pressable>
+                    </View>
+
+                    <View style={styles.fixToText}>
+                        <Text>No tenes cuenta?</Text>
+                        <Pressable onPress={() => Alert.alert('Simple Button pressed')} title="Login" >
+                            <Text style={styles.textCrear}>  Crear</Text>
+                        </Pressable>
+                    </View>
                 </View>
-            </View>
+            </SafeAreaView>
         </View >
     );
 }
@@ -64,6 +66,11 @@ export default Login;
 
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        flexDirection: 'column',
+        paddingTop: Platform.OS === 'android' ? 25 : 0
+    },
     input: {
         height: 40,
         margin: 12,
@@ -101,5 +108,5 @@ const styles = StyleSheet.create({
     textCrear: {
         fontWeight: 'bold',
         color: '#F1AE00',
-    }
+    },
 });
