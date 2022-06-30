@@ -6,63 +6,50 @@ import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
 
 
-
 const NewAccount2 = ({ navigation }) => {
-  const [text, onChangeText] = useState("");
-  const [textPass, onChangeTextPass] = useState("");
+  const [textName, onChangeName] = useState("");
+  const [textLastName, onChangeLastName] = useState("");
+  const [textAge, onChangeAge] = useState("");
+  const [textCountry, onChangeCountry] = useState("");
 
-
-
+  //const [aviso, setAviso] = useState("");
 
   return (
     <View style={styles.container}>
       <SafeAreaView>
-        <Image source={require('../media/imgLogin.png')} style={{ width: '100%', height: 250 }} />
 
-        <View style={{
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center'
-        }}>
-          <View style={{
-            display: 'flex',
-            width: '80%',
-            marginTop: 10,
-            height: 150,
-            flexDirection: 'column',
-            justifyContent: 'space-around'
-          }}>
+        <IconButton icon={props => <Icon name="arrow-left" size={25} style={{marginRight: 10, color: '#F1AE00' }} />} onPress={() => navigation.navigate('Home')}/>
+        
+        
+
+        <View style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+          <View>
+            <Text style={styles.textTitle}> CREAR CUENTA </Text>
+            <Text style={styles.textSubTitle}> COMIDAPP </Text>
+          </View>
+
+          <View style={{display: 'flex', width: '80%', marginTop: 10, height: 150, flexDirection: 'column', justifyContent: 'space-around'}}>
             <SafeAreaView>
-              <TextInput
-                style={styles.input}
-                onChangeText={onChangeText}
-                value={text}
-                placeholder="Usuario"
-              />
-              <TextInput
-                style={styles.input}
-                onChangeText={onChangeTextPass}
-                value={textPass}
-                secureTextEntry={true}
-                placeholder="Contraseña"
-              />
+              <TextInput style={styles.input} onChangeText={onChangeName} value={textName} placeholder="Nombre"/>
+              <TextInput style={styles.input} onChangeText={onChangeLastName} value={textLastName} placeholder="Apellido"/>
+              <TextInput style={styles.input} onChangeText={onChangeAge} value={textAge} placeholder="Edad"/>
+              <TextInput style={styles.input} onChangeText={onChangeCountry} value={textCountry} placeholder="País"/>
             </SafeAreaView>
           </View>
-          <Pressable onPress={() => Alert.alert('Simple Button pressed')} title="Login" >
-            <Text style={styles.textMeOlvideContra} >Me olvide la Contraseña</Text>
-          </Pressable>
+
+
           <View>
-            <Pressable onPress={() => navigation.navigate('Home')} title="Login" style={styles.bttnLogin} >
-              <Text style={styles.textLogin} >Login</Text>
+            <Pressable onPress={() => navigation.navigate('Login')} title="Login" style={styles.bttnLogin}>
+              <Text style={styles.textLogin}> Aceptar </Text>
             </Pressable>
           </View>
           <View style={styles.fixToText}>
-            <Text>No tenes cuenta?</Text>
-            <Pressable onPress={() => Alert.alert('Simple Button pressed')} title="Login" >
-              <Text style={styles.textCrear}>  Crear</Text>
+            <Text>Haciendo click en continuar estás aceptando los </Text>
+            <Pressable onPress={() => Alert.alert('Simple Button pressed')} title="Login">
+              <Text style={styles.textCrear}>Términos y condiciones</Text>
             </Pressable>
           </View>
+
         </View>
       </SafeAreaView>
     </View >

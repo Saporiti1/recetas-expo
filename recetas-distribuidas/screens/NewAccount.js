@@ -20,7 +20,6 @@ const NewAccount = ({ navigation }) => {
         <IconButton icon={props => <Icon name="arrow-left" size={25} style={{marginRight: 10, color: '#F1AE00' }} />} onPress={() => navigation.navigate('Home')}/>
         
         
-        <Image source={require('../media/imgLogin.png')} style={{ width: '100%', height: 250 }} />
 
         <View style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
           <View>
@@ -38,7 +37,7 @@ const NewAccount = ({ navigation }) => {
 
 
           <View>
-            <Pressable onPress={() => navigation.navigate('NewAccount2')} title="Login" style={styles.bttnLogin}>
+            <Pressable onPress={() => navigation.navigate('NewAccount2')} style={styles.bttnLogin}>
               <Text style={styles.textLogin}> Continuar </Text>
             </Pressable>
           </View>
