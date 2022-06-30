@@ -3,10 +3,11 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StyleSheet} from 'react-native';
 
+import Favoritos from './screens/Favoritos';
 import Login from './screens/Login';
 import Home from './screens/Home';
-import Favoritos from './screens/Favoritos';
-
+import NewAccount from './screens/NewAccount';
+import NewAccount2 from './screens/NewAccount2';
 
 
 const Stack = createNativeStackNavigator();
@@ -19,7 +20,8 @@ export default function App() {
         <Stack.Screen name='Login' component={Login} />
         <Stack.Screen name='Home' component={Home} />
         <Stack.Screen name='Favoritos' component={Favoritos} />
-
+        <Stack.Screen name='NewAccount' component={NewAccount} />
+        <Stack.Screen name='NewAccount2' component={NewAccount2} />
 
       </Stack.Navigator>
     </NavigationContainer>
