@@ -1,11 +1,12 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { StatusBar } from 'expo-status-bar';
-import Home from './screens/Home';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet} from 'react-native';
 
 import Login from './screens/Login';
+import Home from './screens/Home';
+import Favoritos from './screens/Favoritos';
+
 
 
 const Stack = createNativeStackNavigator();
@@ -17,6 +18,8 @@ export default function App() {
 
         <Stack.Screen name='Login' component={Login} />
         <Stack.Screen name='Home' component={Home} />
+        <Stack.Screen name='Favoritos' component={Favoritos} />
+
 
       </Stack.Navigator>
     </NavigationContainer>

@@ -52,7 +52,7 @@ const Home = ({ navigation }) => {
                 <Box style={{
                     display: 'flex',
                     width: 'auto',
-                    height: 330,
+                    height: 300,
                     top: 3,
                     backgroundColor: '#FCDC8C',
                     flexDirection: 'column',
