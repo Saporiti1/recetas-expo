@@ -53,7 +53,7 @@ const Login = ({ navigation }) => {
 
                     <View style={styles.fixToText}>
                         <Text>No tenes cuenta?</Text>
-                        <Pressable onPress={() => Alert.alert('Simple Button pressed')} title="Login" >
+                        <Pressable onPress={() => navigation.navigate('NewAccount')} title="Login" >
                             <Text style={styles.textCrear}>  Crear</Text>
                         </Pressable>
                     </View>
