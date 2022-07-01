@@ -11,7 +11,7 @@ const NavBarInf = () => {
         <View style={{position: 'absolute', left: 0, right: 0, bottom: 0, justifyContent: "flex-end", backgroundColor: 'white', height: 50 }}>
                 <Stack fill center spacing={4} style={styles.bottomInfFixed} >
                     <IconButton icon={props => <Icon name="home-outline" size={30} style={{ color: '#F1AE00' }} />} onPress={() => navigation.navigate('Home')} />
-                    <IconButton icon={props => <Icon name="search" size={30} style={{ color: '#F1AE00' }} />} onPress={() => navigation.navigate('Home')} />
+                    <IconButton icon={props => <Icon name="search" size={30} style={{ color: '#F1AE00' }} />} onPress={() => navigation.navigate('Busqueda')} />
                     <IconButton icon={props => <Icon name="add-outline" size={40} style={{ color: '#F1AE00' }} />} onPress={() => navigation.navigate('CrearReceta')} />
                     <IconButton icon={props => <Icon name="ios-bookmarks-outline" size={30} style={{ color: '#F1AE00' }} />} onPress={() => navigation.navigate('Favoritos')} />
                 </Stack>

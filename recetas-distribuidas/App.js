@@ -9,6 +9,7 @@ import Home from './screens/Home';
 import NewAccount from './screens/NewAccount';
 import NewAccount2 from './screens/NewAccount2';
 import CrearReceta from './screens/CrearReceta';
+import Busqueda from './screens/Busqueda';
 
 
 const Stack = createNativeStackNavigator();
@@ -24,6 +25,7 @@ export default function App() {
         <Stack.Screen name='NewAccount' component={NewAccount} />
         <Stack.Screen name='NewAccount2' component={NewAccount2} />
         <Stack.Screen name='CrearReceta' component={CrearReceta} />
+        <Stack.Screen name='Busqueda' component={Busqueda} />
 
       </Stack.Navigator>
     </NavigationContainer>
