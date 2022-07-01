@@ -3,6 +3,8 @@ import { View, Text, Image, TextInput, StyleSheet, Alert, Pressable, Button, Tou
 import { Box, Icon, IconComponentProvider } from "@react-native-material/core";
 import { Card, CardContent, CardAction, CardImage } from 'react-native-material-cards';
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import { useNavigation } from '@react-navigation/native';
+
 
 import NavBarSup from '../components/NavBarSup';
 import NavBarInf from '../components/NavBarInf';
@@ -11,9 +13,11 @@ import NavBarInf from '../components/NavBarInf';
 const starImgFilled = 'https://github.com/tranhonghan/images/blob/main/star_filled.png?raw=true';
 const starImgCorner = 'https://github.com/tranhonghan/images/blob/main/star_corner.png?raw=true';
 
-const Home = ({ navigation }) => {
+const Home = () => {
     const [defaultRating, setDefaultRating] = useState(4);
     const [maxRating, setMaxRating] = useState([1, 2, 3, 4, 5]);
+
+    const navigation = useNavigation();
 
 
     const CustomRatingBar = () => {
@@ -59,10 +63,11 @@ const Home = ({ navigation }) => {
                     justifyContent: 'center',
                     alignItems: 'center'
                 }}>
-                    <Card style={{ margin: 10, borderRadius: 20, backgroundColor: 'grey' }}>
+                    <Card style={{ margin: 10, borderRadius: 20, backgroundColor: 'grey', width: '100%' }} onPress={() => navigation.navigate('Receta')}>
                         <CardImage
                             source={{ uri: 'https://cdn.pixabay.com/photo/2016/08/31/17/41/sunrise-1634197_960_720.jpg' }}
                             style={{ borderTopLeftRadius: 20, borderTopRightRadius: 20, width: '98%' }}
+                            
                         />
                         <Text >Ensalada 7 elemntos</Text>
                         <Text >Por roberto carlos</Text>
