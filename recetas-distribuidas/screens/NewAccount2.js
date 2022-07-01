@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Icon, IconComponentProvider, IconButton } from "@react-native-material/core";
-import { View, Text, Image, TextInput, SafeAreaView, StyleSheet, Alert, Pressable, Button } from 'react-native';
+import { View, Text, Image, TextInput, SafeAreaView, StyleSheet, Alert, Pressable, StatusBar } from 'react-native';
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
 
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'column',
-        paddingTop: Platform.OS === 'android' ? 25 : 0
+        paddingTop: StatusBar.currentHeight
     },
     input: {
         height: 40,

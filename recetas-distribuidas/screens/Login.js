@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Image, TextInput, SafeAreaView, StyleSheet, Alert, Pressable, Button } from 'react-native';
+import { View, Text, Image, TextInput, SafeAreaView, StyleSheet, Alert, Pressable, StatusBar } from 'react-native';
 
 
 
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'column',
-        paddingTop: Platform.OS === 'android' ? 25 : 0
+        paddingTop: StatusBar.currentHeight
     },
     input: {
         height: 40,

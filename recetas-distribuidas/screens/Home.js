@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Image, TextInput, StyleSheet, Alert, Pressable, Button, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, Image, TextInput, StyleSheet, Alert, Pressable, Button, TouchableOpacity, ScrollView, StatusBar } from 'react-native';
 import { Box, Icon, IconComponentProvider } from "@react-native-material/core";
 import { Card, CardContent, CardAction, CardImage } from 'react-native-material-cards';
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
@@ -153,7 +153,7 @@ export default () => (
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingTop: Platform.OS === 'android' ? 25 : 0,
+        paddingTop: StatusBar.currentHeight
     },
     text: {
         fontSize: 25,

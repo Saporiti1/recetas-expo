@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, StyleSheet, FlatList, Dimensions } from 'react-native';
+import { View, Text, Image, StyleSheet, FlatList, Dimensions, StatusBar } from 'react-native';
 import { Icon, IconComponentProvider, Stack, TextInput } from "@react-native-material/core";
 import MaterialCommunityIcons from "@expo/vector-icons/Ionicons";
 import RNPickerSelect from 'react-native-picker-select';
@@ -135,8 +135,7 @@ export default () => (
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingTop: Platform.OS === 'android' ? 25 : 0,
-
+        paddingTop: StatusBar.currentHeight
     },
     itemStyle: {
         //backgroundColor: 'grey',
