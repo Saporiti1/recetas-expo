@@ -12,6 +12,8 @@ import NewAccount2 from './screens/NewAccount2';
 import CrearReceta from './screens/CrearReceta';
 import Busqueda from './screens/Busqueda';
 import Receta from './screens/Receta';
+import ResetPassword from './screens/ResetPassword';
+import ResetPassword2 from './screens/ResetPassword2';
 
 
 const Stack = createNativeStackNavigator();
@@ -29,6 +31,8 @@ export default function App() {
         <Stack.Screen name='CrearReceta' component={CrearReceta} />
         <Stack.Screen name='Busqueda' component={Busqueda} />
         <Stack.Screen name='Receta' component={Receta} />
+        <Stack.Screen name='ResetPassword' component={ResetPassword} />
+        <Stack.Screen name='ResetPassword2' component={ResetPassword2} />
 
       </Stack.Navigator>
     </NavigationContainer>
