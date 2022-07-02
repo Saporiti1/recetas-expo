@@ -4,19 +4,19 @@ import { View, Text, Image, TextInput, SafeAreaView, StyleSheet, Alert, Pressabl
 
 
 const Login = ({ navigation }) => {
-    const [text, onChangeText] = React.useState("");
-    const [textPass, onChangeTextPass] = React.useState("");
+    const [text, onChangeText] = useState("");
+    const [textPass, onChangeTextPass] = useState("");
 
     return (
         <View style={styles.container}>
-            <SafeAreaView>
+            <SafeAreaView style={{height: '100%'}}>
                 <Image source={require('../media/imgLogin.png')} style={{ width: '100%', height: 250 }} />
 
                 <View style={{
                     display: 'flex',
                     flexDirection: 'column',
-                    justifyContent: 'center',
-                    alignItems: 'center'
+                    alignItems: 'center',
+                    height: '100%'
                 }}>
                     <View style={{
                         display: 'flex',
@@ -26,7 +26,7 @@ const Login = ({ navigation }) => {
                         flexDirection: 'column',
                         justifyContent: 'space-around'
                     }}>
-                        <SafeAreaView >
+                        <SafeAreaView style={{top: 30}}>
                             <TextInput
                                 style={styles.input}
                                 onChangeText={onChangeText}
@@ -42,20 +42,24 @@ const Login = ({ navigation }) => {
                             />
                         </SafeAreaView>
                     </View>
-                    <Pressable onPress={() => Alert.alert('Simple Button pressed')} title="Login" >
+
+                    <Pressable onPress={() => navigation.navigate('ResetPassword')} title="Login" >
                         <Text style={styles.textMeOlvideContra} >Me olvide la Contraseña</Text>
                     </Pressable>
-                    <View>
-                        <Pressable onPress={() => navigation.navigate('Home')} title="Login" style={styles.bttnLogin} >
-                            <Text style={styles.textLogin} >Login</Text>
-                        </Pressable>
-                    </View>
 
-                    <View style={styles.fixToText}>
-                        <Text>No tenes cuenta?</Text>
-                        <Pressable onPress={() => navigation.navigate('NewAccount')} title="Login" >
-                            <Text style={styles.textCrear}>  Crear</Text>
-                        </Pressable>
+                    <View style={{display: 'flex', height: '100%'}}>
+                        <View style={{display: 'flex', marginTop: 50}}>
+                            <Pressable onPress={() => navigation.navigate('Home')} title="Login" style={styles.bttnLogin} >
+                                <Text style={styles.textLogin} >Login</Text>
+                            </Pressable>
+                        </View>
+
+                        <View style={styles.fixToText}>
+                            <Text>No tenes cuenta?</Text>
+                            <Pressable onPress={() => navigation.navigate('NewAccount')} title="Login" >
+                                <Text style={styles.textCrear}>  Crear</Text>
+                            </Pressable>
+                        </View>
                     </View>
                 </View>
             </SafeAreaView>
@@ -84,11 +88,11 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         paddingVertical: 12,
         paddingHorizontal: 32,
-        borderRadius: 4,
+        borderRadius: 15,
         backgroundColor: '#F1AE00',
     },
     textLogin: {
-        fontSize: 16,
+        fontSize: 20,
         lineHeight: 21,
         fontWeight: 'bold',
         letterSpacing: 0.25,
@@ -98,12 +102,14 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#F1AE00',
         display: 'flex',
+        marginTop: 20,
         marginLeft: 150,
     },
     fixToText: {
+        display: 'flex',
+        justifyContent: 'center',
         flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginTop: 10,
+        marginTop: 15,
     },
     textCrear: {
         fontWeight: 'bold',

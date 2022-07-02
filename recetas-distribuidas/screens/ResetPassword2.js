@@ -7,12 +7,12 @@ import { useNavigation } from '@react-navigation/native';
 
 
 
-const NewAccount = ({}) => {
+const ResetPassword2 = ({}) => {
   const navigation = useNavigation();
 
-  const [textEmail, onChangeEmail] = useState("");
-  const [textUser, onChangeUser] = useState("");
+  const [textCodigo, onChangeCodigo] = useState("");
   const [textPass, onChangePass] = useState("");
+  const [textPass2, onChangePass2] = useState("");
 
   //const [aviso, setAviso] = useState("");
 
@@ -20,35 +20,35 @@ const NewAccount = ({}) => {
     <View style={styles.container}>
       <SafeAreaView>
 
-        <IconButton style={{marginLeft: 20, marginTop: 20}} icon={props => <Icon name="arrow-left" size={40} style={{color: '#F1AE00'}} />} onPress={() => navigation.navigate('Login')} />
+        <IconButton style={{marginLeft: 20, marginTop: 20}} icon={props => <Icon name="arrow-left" size={40} style={{color: '#F1AE00'}} />} onPress={() => navigation.navigate('ResetPassword')} />
 
+        <View style={{display: 'flex', width: '100%', height: 250, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+          <Image source={require('../media/imgReset.png')} style={{width: 160, height: 160 }} />
+        </View>
 
-
-        <View style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
-          <View style={{marginBottom: 60}}>
-            <Text style={styles.textTitle}> CREAR CUENTA </Text>
-            <Text style={styles.textSubTitle}> COMIDAPP </Text>
+        <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+          <View>
+            <Text style={styles.textTitle}> CAMBIAR CONTRASEÑA </Text>
           </View>
 
-          <View style={{display: 'flex', width: '80%', marginTop: 10, height: 200, flexDirection: 'column', justifyContent: 'space-around'}}>
+          <View style={{display: 'flex', width: '80%', marginTop: 10, height: 200, flexDirection: 'column', justifyContent: 'space-around' }}>
             <SafeAreaView>
-              <TextInput style={styles.input} onChangeText={onChangeEmail} value={textEmail} placeholder="Email" />
-              <TextInput style={styles.input} onChangeText={onChangeUser} value={textUser} placeholder="Usuario" />
+              <TextInput style={styles.input} onChangeText={onChangeCodigo} value={textCodigo} placeholder="Código" />
               <TextInput style={styles.input} onChangeText={onChangePass} value={textPass} secureTextEntry={true} placeholder="Contraseña" />
+              <TextInput style={styles.input} onChangeText={onChangePass2} value={textPass2} secureTextEntry={true} placeholder="Contraseña" />
             </SafeAreaView>
           </View>
 
-
           <View style={{display: 'flex', height: 250, flexDirection: 'column', alignItems: 'center'}}>
             <View>
-              <Pressable onPress={() => navigation.navigate('NewAccount2')} style={styles.bttnNewAcc}>
+              <Pressable onPress={() => navigation.navigate('Login')} style={styles.bttnLogin}>
                 <Text style={styles.textLogin}> Continuar </Text>
               </Pressable>
             </View>
             <View style={styles.fixToText}>
-              <Text>Haciendo click en continuar estás aceptando los </Text>
-              <Pressable onPress={() => Alert.alert('Términos y condiciones')} title="Login">
-                <Text style={styles.textCrear}>Términos y condiciones</Text>
+              <Text>No te llegó un mail? </Text>
+              <Pressable onPress={() => Alert.alert('Simple Button pressed')} title="Login">
+                <Text style={styles.textCrear}>volver a enviar</Text>
               </Pressable>
             </View>
           </View>
@@ -60,14 +60,13 @@ const NewAccount = ({}) => {
 };
 export default () => (
   <IconComponentProvider IconComponent={MaterialCommunityIcons}>
-    <NewAccount />
+    <ResetPassword2 />
   </IconComponentProvider>
 );
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    height: '100%',
     flexDirection: 'column',
     paddingTop: StatusBar.currentHeight
   },
@@ -77,8 +76,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
   },
-  bttnNewAcc: {
-    marginTop: 120,
+  bttnLogin: {
+    marginTop: 40,
     width: 200,
     alignItems: 'center',
     justifyContent: 'center',
@@ -95,14 +94,7 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   textTitle:{
-    marginTop: 70,
-    fontSize: 30,
-  },
-  textSubTitle:{
-    fontFamily: 'sans-serif',
-    alignSelf: 'center',
-    fontSize: 23,
-    color: 'red'
+    fontSize: 20,
   },
   textMeOlvideContra: {
     fontWeight: 'bold',
@@ -111,11 +103,7 @@ const styles = StyleSheet.create({
     marginLeft: 150,
   },
   fixToText: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
+    flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 15,
   },
