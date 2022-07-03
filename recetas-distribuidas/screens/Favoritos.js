@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, StyleSheet, FlatList, Dimensions, StatusBar } from 'react-native';
+import { View, Image, StyleSheet, FlatList, Dimensions, StatusBar } from 'react-native';
 import { Icon, IconComponentProvider, Stack, TextInput } from "@react-native-material/core";
 import MaterialCommunityIcons from "@expo/vector-icons/Ionicons";
 import RNPickerSelect from 'react-native-picker-select';
@@ -48,10 +48,7 @@ const itemData = [
         title: 'Coffee',
         author: '@jordan'
     },
-
 ];
-
-const dataList = [{ key: '1' }, { key: '2' }, { key: '3' }, { key: '4' }, { key: '5' }]
 
 const numColumns = 2
 const WIDTH = Dimensions.get('window').width;
@@ -70,7 +67,7 @@ class Favoritos extends Component {
     }
 
     _renderItem = ({ item, index }) => {
-        let { itemStyle, itemText, itemInvisible } = styles;
+        let { itemStyle, itemInvisible } = styles;
 
         if (item.empty) {
             return <View style={[itemStyle, itemInvisible]} />
@@ -86,11 +83,11 @@ class Favoritos extends Component {
     }
 
     render() {
-        let { container, itemText } = styles;
 
         return (
-            <View style={container}>
+            <View style={{ flex: 1, paddingTop: StatusBar.currentHeight }}>
                 <NavBarSup />
+
                 <View style={{ backgroundColor: '#EBEBAD' }}>
                     <Stack spacing={2} style={{ margin: 16 }}>
                         <RNPickerSelect
@@ -114,11 +111,9 @@ class Favoritos extends Component {
                     <FlatList
                         data={this.formatData(itemData, numColumns)}
                         renderItem={this._renderItem}
-                        keyExtractor={(itemData, index) => index.toString()}
+                        keyExtractor={(item, index) => index.toString()}
                         numColumns={numColumns}
-                    >
-
-                    </FlatList>
+                    />
                 </View>
 
                 <NavBarInf />
@@ -138,17 +133,12 @@ const styles = StyleSheet.create({
         paddingTop: StatusBar.currentHeight
     },
     itemStyle: {
-        //backgroundColor: 'grey',
         alignItems: 'center',
         justifyContent: 'center',
         height: 170,
         flex: 1,
         margin: 1,
         height: WIDTH / numColumns
-    },
-    itemText: {
-        color: 'white',
-        fontSize: 30
     },
     itemInvisible: {
         backgroundColor: 'transparent'
