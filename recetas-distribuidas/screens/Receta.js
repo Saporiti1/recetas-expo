@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
-import { View, Text, Image, TextInput, ScrollView, StyleSheet, StatusBar } from 'react-native';
-import { Icon, IconComponentProvider, IconButton } from "@react-native-material/core";
+import { View, Image, TextInput, ScrollView, StyleSheet, StatusBar, FlatList } from 'react-native';
+import { Icon, IconComponentProvider, IconButton, Text } from "@react-native-material/core";
 import MaterialCommunityIcons from "@expo/vector-icons/Ionicons";
 import { useNavigation } from '@react-navigation/native';
 import MaterialTabs from 'react-native-material-tabs';
+import Carousel from '../components/Carousel';
 
 const Receta = () => {
     const navigation = useNavigation();
     const [selectedTab, setSelectedTab] = useState(0);
+
+
     return (
         <View style={styles.container}>
             <Image source={require('../media/Receta1.png')} style={{ width: '100%', height: 250 }} />
@@ -23,8 +26,13 @@ const Receta = () => {
                     onChange={setSelectedTab}
                     barColor='#EBEBAD'
                     indicatorColor='#FFC68C'
-                    textStyle={{color: 'black'}}
+                    textStyle={{ color: 'black' }}
                 />
+
+
+                <View style={{ backgroundColor: '#FFC68C', marginTop: 5, height: 356 }}>
+                    <Carousel />
+                </View>
             </ScrollView>
 
         </View >
@@ -43,42 +51,83 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         paddingTop: StatusBar.currentHeight
     },
-    input: {
-        height: 40,
-        margin: 12,
-        borderWidth: 1,
-        padding: 10,
+    image: {
+        width: 'auto',
+        height: 250,
+        resizeMode: 'cover',
+        marginVertical: 20,
     },
-    bttnLogin: {
-        marginTop: 80,
-        width: 200,
-        alignItems: 'center',
-        justifyContent: 'center',
-        paddingVertical: 12,
-        paddingHorizontal: 32,
-        borderRadius: 4,
-        backgroundColor: '#F1AE00',
-    },
-    textLogin: {
-        fontSize: 16,
-        lineHeight: 21,
-        fontWeight: 'bold',
-        letterSpacing: 0.25,
-        color: 'white',
-    },
-    textMeOlvideContra: {
-        fontWeight: 'bold',
-        color: '#F1AE00',
-        display: 'flex',
-        marginLeft: 150,
-    },
-    fixToText: {
+    footer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginTop: 10,
-    },
-    textCrear: {
-        fontWeight: 'bold',
-        color: '#F1AE00',
-    },
+        height: 50,
+        paddingHorizontal: 40,
+        alignItems: 'center',
+        backgroundColor: '#000',
+    }
 });
+
+/*
+<Text variant="body2" style={{marginLeft: 5}}>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos
+                        blanditiis tenetur unde suscipit, quam beatae rerum inventore consectetur,
+                        neque doloribus, cupiditate numquam dignissimos laborum fugiat deleniti?
+                        Eum quasi quidem quibusdam.
+                        body2. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos
+                        blanditiis tenetur unde suscipit, quam beatae rerum inventore consectetur,
+                        neque doloribus, cupiditate numquam dignissimos laborum fugiat deleniti?
+                        Eum quasi quidem quibusdam.
+                        body2. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos
+                        blanditiis tenetur unde suscipit, quam beatae rerum inventore consectetur,
+                        neque doloribus, cupiditate numquam dignissimos laborum fugiat deleniti?
+                        Eum quasi quidem quibusdam.
+                        body2. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos
+                        blanditiis tenetur unde suscipit, quam beatae rerum inventore consectetur,
+                        neque doloribus, cupiditate numquam dignissimos laborum fugiat deleniti?
+                        Eum quasi quidem quibusdam.
+                    </Text>
+*/
+
+const itemData = [
+    {
+        img: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e',
+        title: 'Breakfast',
+        author: '@augusto'
+    },
+    {
+        img: 'https://images.unsplash.com/photo-1551782450-a2132b4ba21d',
+        title: 'Burger',
+        author: '@juan'
+    },
+    {
+        img: 'https://images.unsplash.com/photo-1522770179533-24471fcdba45',
+        title: 'Camera',
+        author: '@elmichael'
+    },
+    {
+        img: 'https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c',
+        title: 'Coffee',
+        author: '@jordan'
+    },
+    {
+        img: 'https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c',
+        title: 'Coffee',
+        author: '@jordan'
+    },
+    {
+        img: 'https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c',
+        title: 'Coffee',
+        author: '@jordan'
+    },
+    {
+        img: 'https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c',
+        title: 'Coffee',
+        author: '@jordan'
+    },
+    {
+        img: 'https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c',
+        title: 'Coffee',
+        author: '@augusto'
+    },
+
+];
