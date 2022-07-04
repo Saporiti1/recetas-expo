@@ -2,17 +2,19 @@ import React, { useState } from 'react';
 import { Icon, IconComponentProvider, IconButton } from "@react-native-material/core";
 import { View, Text, Image, TextInput, SafeAreaView, StyleSheet, Alert, Pressable, StatusBar } from 'react-native';
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 
 import { passwordReset } from '../utils/recipesAPI';
 import { requestPasswordReset } from '../utils/recipesAPI';
 
 
-const ResetPassword2 = ({route}) => {
+const ResetPassword2 = ({}) => {
   const navigation = useNavigation();
 
-  const {codigoEnviado, userMail} = route.params;
+  const route = useRoute();
+  const codigoEnviado = route.params.userDataAPI;
+  const userMail = route.params.textEmail;
 
   const [textCodigo, onChangeCodigo] = useState("");
   const [textPass, onChangePass] = useState("");
