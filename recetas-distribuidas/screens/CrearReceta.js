@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, StyleSheet, Text, ScrollView, Image, StatusBar, Pressable } from 'react-native';
 import { Icon, IconComponentProvider, Stack, TextInput, Box, IconButton, VStack } from "@react-native-material/core";
 import MaterialCommunityIcons from "@expo/vector-icons/Ionicons";
@@ -20,6 +20,7 @@ const itemData = [
 const CrearReceta = () => {
 
     const navigation = useNavigation();
+    const [valores, setValores] = useState([]);
 
     return (
         <View style={styles.container}>
@@ -97,24 +98,39 @@ const CrearReceta = () => {
                 <View>
                     <Text style={{ backgroundColor: '#FFC68C', width: '100%', display: 'flex', marginTop: 10, fontSize: 18 }}> Ingredientes </Text>
                     <VStack m={4} spacing={2} divider={true} style={{ backgroundColor: '#EBEBAD', borderRadius: 8 }}>
-                        <View style={{ marginLeft: 2, marginTop: 5, flexDirection: 'row', justifyContent: 'space-between' }}>
-                            <Text style={{ fontWeight: 'bold', paddingTop: 20 }}> {'\u2B24'}</Text>
-                            <TextInput id="NombreReceta" variant="standard" color='#F1AE00' style={{ width: '40%' }} placeholder='Ingrediente' />
-                            <TextInput id="NombreReceta" variant="standard" color='#F1AE00' style={{ width: '40%' }} placeholder='Cantidad' />
-                        </View>
-
-                        <View style={{ marginLeft: 2, marginTop: 5, flexDirection: 'row', justifyContent: 'space-between' }}>
-                            <Text style={{ fontWeight: 'bold', paddingTop: 20 }}> {'\u2B24'}</Text>
-                            <TextInput id="NombreReceta" variant="standard" color='#F1AE00' style={{ width: '40%' }} placeholder='Ingrediente' />
-                            <TextInput id="NombreReceta" variant="standard" color='#F1AE00' style={{ width: '40%' }} placeholder='Cantidad' />
-                        </View>
-
-                        <View style={{ marginLeft: 2, marginTop: 5, flexDirection: 'row', justifyContent: 'space-between' }}>
-                            <Text style={{ fontWeight: 'bold', paddingTop: 20 }}> {'\u2B24'}</Text>
-                            <TextInput id="NombreReceta" variant="standard" color='#F1AE00' style={{ width: '40%' }} placeholder='Ingrediente' />
-                            <TextInput id="NombreReceta" variant="standard" color='#F1AE00' style={{ width: '40%' }} placeholder='Cantidad' />
-                        </View>
+                        {
+                            valores.map((v, i) =>
+                                <View style={{ marginLeft: 2, marginTop: 5, flexDirection: 'row', justifyContent: 'space-between' }}>
+                                    <Text style={{ fontWeight: 'bold', paddingTop: 20 }}> {'\u2B24'}</Text>
+                                    <TextInput id="NombreReceta" variant="standard" color='#F1AE00' style={{ width: '40%' }} placeholder='Ingrediente' value={v.ingrediente} onChange={(z) => {
+                                        const aux = [...valores]
+                                        aux[i].ingrediente = z.target.value
+                                        setValores(aux)
+                                    }} />
+                                    <TextInput id="NombreReceta" variant="standard" color='#F1AE00' style={{ width: '40%' }} placeholder='Cantidad' value={v.cantidad} onChange={(z) => {
+                                        const aux = [...valores]
+                                        aux[i].cantidad = z.target.value
+                                        setValores(aux)
+                                    }} />
+                                </View>
+                            )
+                        }
+                        <Pressable style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            paddingVertical: 12,
+                            paddingHorizontal: 32,
+                            borderRadius: 12,
+                            backgroundColor: '#F1AE00',
+                            width: 250
+                        }}
+                            onPress={() => setValores([...valores, { ingrediente: '', cantidad: 0 }])}
+                        >
+                            <Text >Agregar Ingrediente</Text>
+                        </Pressable>
                     </VStack>
+
                 </View>
                 <View>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>

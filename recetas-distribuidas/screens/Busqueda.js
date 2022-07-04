@@ -138,6 +138,7 @@ class Busqueda extends Component {
                                 { label: 'Baseball', value: 'baseball' },
                                 { label: 'Hockey', value: 'hockey' },
                             ]}
+                            style={{}}
                         />
                         <TextInput
                             variant="outlined"

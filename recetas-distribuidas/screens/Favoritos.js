@@ -43,11 +43,6 @@ const itemData = [
         title: 'Coffee',
         author: '@jordan'
     },
-    {
-        img: 'https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c',
-        title: 'Coffee',
-        author: '@jordan'
-    },
 ];
 
 const numColumns = 2
@@ -76,7 +71,7 @@ class Favoritos extends Component {
         return (
             <View style={itemStyle}>
                 {itemData.map((item) => (
-                    <Image source={{ uri: item.img }} style={{ width: 170, height: 170, marginTop: 10 }} />
+                    <Image key={item.img} source={{ uri: item.img }} style={{ width: 170, height: 170, marginTop: 10 }} />
                 ))}
             </View>
         )
@@ -114,11 +109,14 @@ class Favoritos extends Component {
                         keyExtractor={(item, index) => index.toString()}
                         numColumns={numColumns}
                     />
+                    <View style={{ height: 300 }}>
+
+                    </View>
                 </View>
+
 
                 <NavBarInf />
             </View>
-
         )
     }
 };
