@@ -5,16 +5,32 @@ import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { useNavigation } from '@react-navigation/native';
 
 
+import { requestPasswordReset } from '../utils/recipesAPI';
 
 
 const ResetPassword = ({}) => {
   const navigation = useNavigation();
-
   const [textEmail, onChangeEmail] = useState("");
-  //const [textUser, onChangeUser] = useState("");
-  //const [textPass, onChangePass] = useState("");
 
   //const [aviso, setAviso] = useState("");
+
+  const sendCodeEmail = async () => {
+    const userDataAPI = await requestPasswordReset(textEmail);
+    //console.log(userDataAPI);
+    
+    //SUPUSE QUE EL CÓDIGO DE VERIFICACIÓN ES MAYOR A 1000... SINO DESPUÉS SE CAMBIA LA LÓGICA...
+    if(userDataAPI > 1000) {
+      navigation.navigate('ResetPassword2', {userDataAPI, textEmail});
+    } else if(userDataAPI == 404) {
+      Alert.alert('El correo electrónico no existe');
+      //setAviso(<Alert severity="error">El correo electrónico no existe</Alert>);
+    } else {
+      Alert.alert('Hubo un error al enviar el código');
+      //setAviso(<Alert severity="error">Hubo un error al enviar el código</Alert>);
+    }
+  }
+
+
 
   return (
     <View style={styles.container}>
@@ -39,7 +55,7 @@ const ResetPassword = ({}) => {
 
 
           <View>
-            <Pressable onPress={() => navigation.navigate('ResetPassword2')} style={styles.bttnLogin}>
+            <Pressable onPress={sendCodeEmail} style={styles.bttnLogin}>
               <Text style={styles.textLogin}> Continuar </Text>
             </Pressable>
           </View>

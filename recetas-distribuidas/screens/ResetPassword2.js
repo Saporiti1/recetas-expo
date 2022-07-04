@@ -5,16 +5,47 @@ import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { useNavigation } from '@react-navigation/native';
 
 
+import { passwordReset } from '../utils/recipesAPI';
+import { requestPasswordReset } from '../utils/recipesAPI';
 
 
-const ResetPassword2 = ({}) => {
+const ResetPassword2 = ({route}) => {
   const navigation = useNavigation();
+
+  const {codigoEnviado, userMail} = route.params;
 
   const [textCodigo, onChangeCodigo] = useState("");
   const [textPass, onChangePass] = useState("");
   const [textPass2, onChangePass2] = useState("");
 
   //const [aviso, setAviso] = useState("");
+
+  const validateCode = async () => {
+    if(codigoEnviado !== parseInt(textCodigo)) {
+      Alert.alert('El código ingresado no coincide');
+      //setAviso(<Alert severity="error">El código ingresado no coincide</Alert>);
+    }
+    else if(textPass !== textPass2) {
+      Alert.alert('Las contraseñas no coinciden');
+      //setAviso(<Alert severity="error">Las contraseñas no coinciden</Alert>);
+    }
+    else if(codigoEnviado == parseInt(textCodigo) && textPass == textPass2) {
+      const userDataAPI = await passwordReset(userMail, codigoEnviado, textPass2);
+
+      //setAviso(<Alert severity="success">Todo en orden</Alert>);
+      setTimeout(() => {
+        navigation.navigate('Login');
+      }, 1500);
+    }
+  }
+  const sendCodeEmail = async () => {
+    const userPassAPI = await requestPasswordReset(textEmail);
+    if(userPassAPI != 1000 || userPassAPI != 404) {
+      Alert.alert('Hubo un error al enviar el código');
+      //setAviso(<Alert severity="error">Hubo un error al enviar el código</Alert>);
+    }
+  }
+
 
   return (
     <View style={styles.container}>
@@ -41,13 +72,13 @@ const ResetPassword2 = ({}) => {
 
           <View style={{display: 'flex', height: 250, flexDirection: 'column', alignItems: 'center'}}>
             <View>
-              <Pressable onPress={() => navigation.navigate('Login')} style={styles.bttnLogin}>
+              <Pressable onPress={validateCode} style={styles.bttnLogin}>
                 <Text style={styles.textLogin}> Continuar </Text>
               </Pressable>
             </View>
             <View style={styles.fixToText}>
               <Text>No te llegó un mail? </Text>
-              <Pressable onPress={() => Alert.alert('Simple Button pressed')} title="Login">
+              <Pressable onPress={sendCodeEmail} title="Login">
                 <Text style={styles.textCrear}>volver a enviar</Text>
               </Pressable>
             </View>

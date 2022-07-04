@@ -5,10 +5,13 @@ import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { useNavigation } from '@react-navigation/native';
 
 
+import { addAccountDetails } from '../utils/recipesAPI';
 
 
-const NewAccount2 = ({}) => {
+const NewAccount2 = ({route}) => {
   const navigation = useNavigation();
+  
+  const userEmail = route.params;
 
   const [textName, onChangeName] = useState("");
   const [textLastName, onChangeLastName] = useState("");
@@ -17,13 +20,32 @@ const NewAccount2 = ({}) => {
 
   //const [aviso, setAviso] = useState("");
 
+  const addNewDataUser = async () => {
+    const userDataAPI = await addAccountDetails(userEmail, textName, textLastName, textAge, textCountry);
+    console.log(userDataAPI);
+
+    if(textName == '' || textLastName == '' || textAge == '' || textCountry == '') {
+      Alert.alert('Debe ingresar todos los datos');
+      //setAviso(<Alert severity="error">Debe ingresar todos los datos</Alert>);
+    }else {
+      if(userDataAPI == 200) {
+        //setAviso(<Alert severity="success">Bienvenido, {inputOneName}!</Alert>);
+        setTimeout(() => {
+          navigation.navigate('Login');
+        }, 1500);
+      }else {
+        Alert.alert('Hubo un problema en la carga');
+        //setAviso(<Alert severity="error">Hubo un problema en la carga</Alert>);
+      }
+    }
+  }
+
+
   return (
     <View style={styles.container}>
       <SafeAreaView>
 
         <IconButton style={{marginLeft: 20, marginTop: 20}} icon={props => <Icon name="arrow-left" size={40} style={{color: '#F1AE00' }} />} onPress={() => navigation.navigate('NewAccount')}/>
-        
-        
 
         <View style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
           <View style={{marginBottom: 60}}>
@@ -43,7 +65,7 @@ const NewAccount2 = ({}) => {
 
           <View style={{display: 'flex', height: 250, flexDirection: 'column', alignItems: 'center'}}>
             <View>
-              <Pressable onPress={() => navigation.navigate('Login')} title="Login" style={styles.bttnNewAcc}>
+              <Pressable onPress={addNewDataUser} title="Login" style={styles.bttnNewAcc}>
                 <Text style={styles.textLogin}> Aceptar </Text>
               </Pressable>
             </View>

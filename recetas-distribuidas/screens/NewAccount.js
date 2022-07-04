@@ -5,6 +5,7 @@ import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { useNavigation } from '@react-navigation/native';
 
 
+import { createAccount } from '../utils/recipesAPI';
 
 
 const NewAccount = ({}) => {
@@ -15,6 +16,27 @@ const NewAccount = ({}) => {
   const [textPass, onChangePass] = useState("");
 
   //const [aviso, setAviso] = useState("");
+
+  const validateAccount = async () => {
+    if(textEmail == '' || textUser == '' || textPass == ''){
+      Alert.alert('Debe ingresar todos los datos');
+      //setAviso(<Alert severity="error">Debe ingresar todos los datos</Alert>);
+    }else {
+      const userDataAPI = await createAccount(textUser, textPass, textEmail);
+      //console.log(userDataAPI);
+      
+      if(userDataAPI == 200) {
+        navigation.navigate('NewAccount2', textEmail);
+      }else if(userDataAPI == 500) {
+        Alert.alert('La cuenta ya existe');
+        //setAviso(<Alert severity="error">La cuenta ya existe</Alert>);
+      }else {
+        Alert.alert('Hubo un problema en la creación');
+        //setAviso(<Alert severity="error">Hubo un problema en la creación</Alert>);
+      }
+    }
+  }
+
 
   return (
     <View style={styles.container}>
@@ -41,7 +63,7 @@ const NewAccount = ({}) => {
 
           <View style={{display: 'flex', height: 250, flexDirection: 'column', alignItems: 'center'}}>
             <View>
-              <Pressable onPress={() => navigation.navigate('NewAccount2')} style={styles.bttnNewAcc}>
+              <Pressable onPress={validateAccount} style={styles.bttnNewAcc}>
                 <Text style={styles.textLogin}> Continuar </Text>
               </Pressable>
             </View>
