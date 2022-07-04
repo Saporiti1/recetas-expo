@@ -2,16 +2,17 @@ import React, { useState } from 'react';
 import { Icon, IconComponentProvider, IconButton } from "@react-native-material/core";
 import { View, Text, Image, TextInput, SafeAreaView, StyleSheet, Alert, Pressable, StatusBar } from 'react-native';
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 
 import { addAccountDetails } from '../utils/recipesAPI';
 
 
-const NewAccount2 = ({route}) => {
+const NewAccount2 = ({}) => {
   const navigation = useNavigation();
   
-  const userEmail = route.params;
+  const route = useRoute();
+  const userEmail = route.params.textEmail;
 
   const [textName, onChangeName] = useState("");
   const [textLastName, onChangeLastName] = useState("");

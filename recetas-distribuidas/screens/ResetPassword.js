@@ -20,7 +20,7 @@ const ResetPassword = ({}) => {
     
     //SUPUSE QUE EL CÓDIGO DE VERIFICACIÓN ES MAYOR A 1000... SINO DESPUÉS SE CAMBIA LA LÓGICA...
     if(userDataAPI > 1000) {
-      navigation.navigate('ResetPassword2', {userDataAPI, textEmail});
+      navigation.navigate('ResetPassword2', {userDataAPI: userDataAPI, textEmail: textEmail});
     } else if(userDataAPI == 404) {
       Alert.alert('El correo electrónico no existe');
       //setAviso(<Alert severity="error">El correo electrónico no existe</Alert>);

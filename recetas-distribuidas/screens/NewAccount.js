@@ -26,7 +26,7 @@ const NewAccount = ({}) => {
       //console.log(userDataAPI);
       
       if(userDataAPI == 200) {
-        navigation.navigate('NewAccount2', textEmail);
+        navigation.navigate('NewAccount2', {textEmail: textEmail});
       }else if(userDataAPI == 500) {
         Alert.alert('La cuenta ya existe');
         //setAviso(<Alert severity="error">La cuenta ya existe</Alert>);
