@@ -1,5 +1,5 @@
 import React, { useState, Component } from 'react';
-import { View, Text, Image, StyleSheet, FlatList, Pressable, Button, TouchableOpacity, StatusBar } from 'react-native';
+import { View, Text, Image, StyleSheet, FlatList, TouchableOpacity, StatusBar } from 'react-native';
 import { Stack, Icon, IconComponentProvider, TextInput } from "@react-native-material/core";
 import MaterialCommunityIcons from "@expo/vector-icons/Ionicons";
 import RNPickerSelect from 'react-native-picker-select';

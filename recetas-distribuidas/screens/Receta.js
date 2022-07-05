@@ -5,6 +5,8 @@ import MaterialCommunityIcons from "@expo/vector-icons/Ionicons";
 import { useNavigation } from '@react-navigation/native';
 import MaterialTabs from 'react-native-material-tabs';
 import Carousel from '../components/Carousel';
+import Rating from '../components/Rating';
+
 
 const Receta = () => {
     const navigation = useNavigation();
@@ -20,6 +22,24 @@ const Receta = () => {
             </View>
 
             <ScrollView>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between'}}>
+                    <View style={{ flexDirection: 'column' }}>
+                        <Text style={{marginLeft: 5}}> Fideos con salsa </Text>
+                        <Text style={{marginLeft: 5}}> por  Author </Text>
+                    </View>
+
+                    <Icon name="bookmark-outline" size={30} style={{ color: '#F1AE00' , right: 10}} />
+                </View>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                    <Rating />
+
+                    <View style={{ backgroundColor: '#EBEBAD', flexDirection: 'row',  borderRadius: 5, height: 25, right: 10 }}>
+                        <Text>3</Text>
+                        <Icon name="pizza" size={20} style={{ color: '#F1AE00' }} />
+                        <Text style={{ marginLeft: 5}}>9</Text>
+                        <Icon name="body" size={20} style={{ color: '#F1AE00' }} />
+                    </View>
+                </View>
                 <MaterialTabs
                     items={['Descripcion', 'Pasos', 'Ingredientes']}
                     selectedIndex={selectedTab}
@@ -28,6 +48,7 @@ const Receta = () => {
                     indicatorColor='#FFC68C'
                     textStyle={{ color: 'black' }}
                 />
+
                 <View style={{ backgroundColor: '#FFC68C', marginTop: 5, height: 356 }}>
                     {
                         selectedTab == 0 ?
@@ -60,7 +81,7 @@ const Receta = () => {
                                         {
                                             itemData.map((item) => (
                                                 <View style={{ marginLeft: 2, padding: 5, flexDirection: 'row', justifyContent: 'space-between' }}>
-                                                    <Text style={{ fontWeight: 'bold'}}> {'\u2B24'}</Text>
+                                                    <Text style={{ fontWeight: 'bold' }}> {'\u2B24'}</Text>
                                                     <Text>{item.nombreIngrediente}</Text>
                                                     <Text>{item.cantidadIngrediente}</Text>
                                                 </View>

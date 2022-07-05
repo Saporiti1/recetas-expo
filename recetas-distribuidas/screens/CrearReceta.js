@@ -123,11 +123,12 @@ const CrearReceta = () => {
                             paddingHorizontal: 32,
                             borderRadius: 12,
                             backgroundColor: '#F1AE00',
-                            width: 250
+                            width: 250,
+                            marginLeft: 80
                         }}
                             onPress={() => setValores([...valores, { ingrediente: '', cantidad: 0 }])}
                         >
-                            <Text >Agregar Ingrediente</Text>
+                            <Text>Agregar Ingrediente</Text>
                         </Pressable>
                     </VStack>
 

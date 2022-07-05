@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { View, Image, StyleSheet, FlatList, Dimensions, StatusBar } from 'react-native';
+import { View, Image, StyleSheet, FlatList, Dimensions, StatusBar, Text } from 'react-native';
 import { Icon, IconComponentProvider, Stack, TextInput } from "@react-native-material/core";
 import MaterialCommunityIcons from "@expo/vector-icons/Ionicons";
 import RNPickerSelect from 'react-native-picker-select';
+import Rating from '../components/Rating';
 
 import NavBarSup from '../components/NavBarSup';
 import NavBarInf from '../components/NavBarInf';
@@ -48,42 +49,51 @@ const itemData = [
 const numColumns = 2
 const WIDTH = Dimensions.get('window').width;
 
-class Favoritos extends Component {
+class FlatListItem extends Component {
+    render() {
 
-    formatData = (data, numColumns) => {
-        const totalRows = Math.floor(itemData.length / numColumns);
-        let totalLastRow = itemData.length - (totalRows * numColumns);
-
-        while (totalLastRow !== 0 && totalLastRow !== numColumns) {
-            itemData.push({ key: 'blank', empty: true })
-            totalLastRow++
-        }
-        return itemData
-    }
-
-    _renderItem = ({ item, index }) => {
-        let { itemStyle, itemInvisible } = styles;
-
-        if (item.empty) {
-            return <View style={[itemStyle, itemInvisible]} />
-        }
 
         return (
-            <View style={itemStyle}>
-                {itemData.map((item) => (
-                    <Image key={item.img} source={{ uri: item.img }} style={{ width: 170, height: 170, marginTop: 10 }} />
-                ))}
+            <View>
+                <View style={{ flexDirection: 'row', backgroundColor: '#F4F4F4', borderRadius: 12, width: '95%', marginLeft: 10 }}>
+                    <Image
+                        source={{ uri: this.props.item.img }}
+                        style={{ width: 100, height: 100, margin: 5, borderRadius: 12 }}
+                    />
+                    <View style={{ height: 100, marginTop: 5 }}>
+                        <Text>{this.props.item.title}</Text>
+                        <Text>{this.props.item.author}</Text>
+
+                        <View style={{ flexDirection: 'row', marginTop: 35, justifyContent: 'space-between' }}>
+
+                            <Rating />
+
+                            <Icon name="bookmark-sharp" size={25} style={{ color: '#F1AE00', paddingLeft: 100 }} />
+                        </View>
+                    </View>
+
+                </View>
+
+                <View style={{ height: 3, backgroundColor: 'white' }}>
+
+                </View>
             </View>
-        )
+        );
     }
+}
+
+class Favoritos extends Component {
+
+
 
     render() {
 
         return (
             <View style={{ flex: 1, paddingTop: StatusBar.currentHeight }}>
                 <NavBarSup />
-
+                
                 <View style={{ backgroundColor: '#EBEBAD' }}>
+                <Text style={{fontSize: 18, paddingLeft: 130}}>Tus Platos Favoritos</Text>
                     <Stack spacing={2} style={{ margin: 16 }}>
                         <RNPickerSelect
                             placeholder={{ label: 'Seleccione un ingrediente', value: null }}
@@ -102,16 +112,20 @@ class Favoritos extends Component {
                     </Stack>
                 </View>
 
-                <View style={{ paddingTop: 40 }}>
-                    <FlatList
-                        data={this.formatData(itemData, numColumns)}
-                        renderItem={this._renderItem}
-                        keyExtractor={(item, index) => index.toString()}
-                        numColumns={numColumns}
-                    />
-                    <View style={{ height: 300 }}>
+                <View style={{ height: 3, backgroundColor: 'white' }}>
 
-                    </View>
+                </View>
+                <FlatList
+                    data={itemData}
+                    renderItem={({ item, index }) => {
+
+                        return (
+                            <FlatListItem item={item} index={index} />
+                        );
+                    }}
+                />
+                <View style={{ height: 50 }}>
+
                 </View>
 
 
