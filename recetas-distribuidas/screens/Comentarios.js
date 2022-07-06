@@ -13,6 +13,7 @@ import {
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { useNavigation } from '@react-navigation/native';
 import Rating from '../components/Rating';
+import RatingDinamico from '../components/RatingDinamico';
 
 
 import NavBarSup from '../components/NavBarSup';
@@ -63,7 +64,7 @@ const Comentarios = () => {
                     <DialogHeader title="Ingrese su puntuacion" />
                     <DialogContent>
                         <Stack spacing={2}>
-                            <Rating />
+                            <RatingDinamico />
                             <Text style={{marginTop: 5}}>Comentario</Text>
                             <TextInput fullWidth id="descripcion_receta" hiddenLabel color='#F1AE00' multiline={true} />
                         </Stack>
@@ -93,7 +94,7 @@ const Comentarios = () => {
                     {
                         itemData.map((item, key) => {
                             return (
-                                <View style={{ marginTop: 5, left: 5, }}>
+                                <View style={{ marginTop: 5, left: 5, }} key={item}>
                                     <Text style={{ fontSize: 18 }}>{item.usuario}</Text>
                                     <Text style={{ marginLeft: 250, bottom: 20 }}> <Rating /> </Text>
 
