@@ -56,7 +56,7 @@ const Comentarios = () => {
                     <Text>Comentarios y calificaciones</Text>
                 </View>
                 <View style={{ marginTop: 25 }}>
-                    <Rating />
+                    <Rating  rating={3}/>
                 </View>
                 <IconButton icon={props => <Icon name="pencil" size={25} style={{ color: '#F1AE00' }} />} onPress={() => setVisible(true)} style={{ marginTop: 10, left: 30 }} />
 

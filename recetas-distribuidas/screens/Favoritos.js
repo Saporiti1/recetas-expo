@@ -66,7 +66,7 @@ class FlatListItem extends Component {
 
                         <View style={{ flexDirection: 'row', marginTop: 35, justifyContent: 'space-between' }}>
 
-                            <Rating />
+                            <Rating rating={3}/>
 
                             <Icon name="bookmark-sharp" size={25} style={{ color: '#F1AE00', paddingLeft: 100 }} />
                         </View>

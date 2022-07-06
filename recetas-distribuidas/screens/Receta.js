@@ -33,7 +33,7 @@ const Receta = () => {
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
 
                     <Pressable onPress={() => navigation.navigate('Comentarios')} style={{ flexDirection: 'row', justifyContent: 'space-between' }} >
-                        <Rating />
+                        <Rating  rating={3}/>
                         <Text>(289)</Text>
                     </Pressable>
 

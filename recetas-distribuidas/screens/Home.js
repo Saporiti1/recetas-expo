@@ -4,7 +4,7 @@ import { Box, Icon, IconComponentProvider } from "@react-native-material/core";
 import { Card, CardAction, CardImage } from 'react-native-material-cards';
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { useNavigation } from '@react-navigation/native';
-
+import Rating from '../components/Rating';
 
 import NavBarSup from '../components/NavBarSup';
 import NavBarInf from '../components/NavBarInf';
@@ -108,7 +108,7 @@ const Home = () => {
             <Text>{`${foodData.name}`}</Text>
             <Text>{'por ' + `${userData.name}`}</Text>
             <CardAction separator={false} inColumn={false} style={{justifyContent: 'space-between'}}>
-              <CustomRatingBar />
+              <Rating rating={foodRating}/>
 
               <Icon name="bookmark-outline" size={25} style={{marginRight: 10, color: '#F1AE00'}}/>
 

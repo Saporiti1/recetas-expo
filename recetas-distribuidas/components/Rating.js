@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Image, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
-const Rating = () => {
-    const [defaultRating, setDefaultRating] = useState(2);
+const Rating = ({rating}) => {
+    const [defaultRating, setDefaultRating] = useState(rating);
     const [maxRating, setMaxRating] = useState([1, 2, 3, 4, 5]);
 
     const starImgFilled = 'https://github.com/tranhonghan/images/blob/main/star_filled.png?raw=true';
