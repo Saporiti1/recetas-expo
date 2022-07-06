@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Image, TextInput, ScrollView, StyleSheet, StatusBar, FlatList } from 'react-native';
+import { View, Image, Pressable, ScrollView, StyleSheet, StatusBar, FlatList } from 'react-native';
 import { Icon, IconComponentProvider, IconButton, Text, VStack } from "@react-native-material/core";
 import MaterialCommunityIcons from "@expo/vector-icons/Ionicons";
 import { useNavigation } from '@react-navigation/native';
@@ -22,21 +22,26 @@ const Receta = () => {
             </View>
 
             <ScrollView>
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between'}}>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                     <View style={{ flexDirection: 'column' }}>
-                        <Text style={{marginLeft: 5}}> Fideos con salsa </Text>
-                        <Text style={{marginLeft: 5}}> por  Author </Text>
+                        <Text style={{ marginLeft: 5 }}> Fideos con salsa </Text>
+                        <Text style={{ marginLeft: 5 }}> por  Author </Text>
                     </View>
 
-                    <Icon name="bookmark-outline" size={30} style={{ color: '#F1AE00' , right: 10}} />
+                    <Icon name="bookmark-outline" size={30} style={{ color: '#F1AE00', right: 10 }} />
                 </View>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                    <Rating />
 
-                    <View style={{ backgroundColor: '#EBEBAD', flexDirection: 'row',  borderRadius: 5, height: 25, right: 10 }}>
+                    <Pressable onPress={() => navigation.navigate('Comentarios')} style={{ flexDirection: 'row', justifyContent: 'space-between' }} >
+                        <Rating />
+                        <Text>(289)</Text>
+                    </Pressable>
+
+
+                    <View style={{ backgroundColor: '#EBEBAD', flexDirection: 'row', borderRadius: 5, height: 25, right: 10 }}>
                         <Text>3</Text>
                         <Icon name="pizza" size={20} style={{ color: '#F1AE00' }} />
-                        <Text style={{ marginLeft: 5}}>9</Text>
+                        <Text style={{ marginLeft: 5 }}>9</Text>
                         <Icon name="body" size={20} style={{ color: '#F1AE00' }} />
                     </View>
                 </View>
