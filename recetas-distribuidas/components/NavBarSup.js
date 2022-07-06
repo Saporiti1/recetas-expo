@@ -20,7 +20,7 @@ const NavBarSup = () => {
                 height: 50
             }}>
                 <View >
-                    <IconButton icon={props => <Icon name="arrow-left" size={25} style={{ marginRight: 10, color: '#F1AE00' }} />} onPress={() => navigation.navigate('Home')} />
+                    <IconButton icon={props => <Icon name="arrow-left" size={25} style={{ marginRight: 10, color: '#F1AE00' }} />} onPress={() => navigation.goBack()} />
                 </View>
 
                 <View style={{}}>
