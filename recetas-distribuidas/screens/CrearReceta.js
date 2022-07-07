@@ -3,6 +3,7 @@ import { View, StyleSheet, Text, ScrollView, Image, StatusBar, Pressable } from 
 import { Icon, IconComponentProvider, Stack, TextInput, Box, IconButton, VStack } from "@react-native-material/core";
 import MaterialCommunityIcons from "@expo/vector-icons/Ionicons";
 import { useNavigation } from '@react-navigation/native';
+import * as ImagePicker from 'expo-image-picker';
 
 
 import NavBarSup from '../components/NavBarSup';
@@ -17,10 +18,64 @@ const itemData = [
 
 ];
 
+
 const CrearReceta = () => {
 
     const navigation = useNavigation();
     const [valores, setValores] = useState([]);
+    const [image1, setImage1] = useState(null);
+    const [image2, setImage2] = useState(null);
+    const [image3, setImage3] = useState(null);
+
+
+    const pickImage1 = async () => {
+        // No permissions request is necessary for launching the image library
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1,
+        });
+
+        console.log(result);
+
+        if (!result.cancelled) {
+            setImage1(result.uri);
+        }
+    };
+    const pickImage2 = async () => {
+        // No permissions request is necessary for launching the image library
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1,
+        });
+
+        console.log(result);
+
+        if (!result.cancelled) {
+            setImage2(result.uri);
+        }
+    };
+
+    const pickImage3 = async () => {
+        // No permissions request is necessary for launching the image library
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1,
+        });
+
+        console.log(result);
+
+        if (!result.cancelled) {
+            setImage3(result.uri);
+        }
+    };
+
+
 
     return (
         <View style={styles.container}>
@@ -31,18 +86,23 @@ const CrearReceta = () => {
 
                 <Stack direction="row" spacing={3} style={{ marginTop: 1 }}>
                     <Box style={{ borderWidth: 3, backgroundColor: 'grey', borderRadius: 10 }}>
-                        <IconButton icon={props => <Icon name="add-outline" size={40} />} />
+                        <IconButton icon={props => <Icon name="add-outline" size={40} />} onPress={pickImage1} />
                     </Box>
                     <Box style={{ borderWidth: 3, backgroundColor: 'grey', borderRadius: 10 }}>
-                        <IconButton icon={props => <Icon name="add-outline" size={40} />} />
+                        <IconButton icon={props => <Icon name="add-outline" size={40} />} onPress={pickImage2} />
                     </Box>
                     <Box style={{ borderWidth: 3, backgroundColor: 'grey', borderRadius: 10 }}>
-                        <IconButton icon={props => <Icon name="add-outline" size={40} />} />
+                        <IconButton icon={props => <Icon name="add-outline" size={40} />} onPress={pickImage3} />
                     </Box>
                 </Stack>
+                <View style={{ flexDirection: 'row', marginLeft: 10, marginTop: 3}}>
+                    <Image source={{ uri: image1 }} style={styles.image} />
+                    <Image source={{ uri: image2 }} style={styles.image} />
+                    <Image source={{ uri: image3 }} style={styles.image} />
+                </View>
             </View>
 
-            <ScrollView contentContainerStyle={{ flexGrow: 1, height: '170%' }}>
+            <ScrollView contentContainerStyle={{ flexGrow: 1, }}>
                 <View>
                     <View>
                         <View>
@@ -160,6 +220,9 @@ const CrearReceta = () => {
                         <Text >Agregar Receta</Text>
                     </Pressable>
                 </View>
+                <View style={{ height: 70 }}>
+
+                </View>
             </ScrollView>
 
             <NavBarInf />
@@ -178,4 +241,9 @@ const styles = StyleSheet.create({
         paddingTop: StatusBar.currentHeight,
 
     },
+    image: {
+        width: 50,
+        height: 50,
+        marginRight: 10,
+    }
 });
