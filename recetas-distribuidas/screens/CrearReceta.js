@@ -23,9 +23,11 @@ const CrearReceta = () => {
 
     const navigation = useNavigation();
     const [valores, setValores] = useState([]);
+    const [pasos, setPasos] = useState([]);
     const [image1, setImage1] = useState(null);
     const [image2, setImage2] = useState(null);
     const [image3, setImage3] = useState(null);
+    const [image4, setImage4] = useState(null);
 
 
     const pickImage1 = async () => {
@@ -75,6 +77,22 @@ const CrearReceta = () => {
         }
     };
 
+    const pickImage4 = async () => {
+        // No permissions request is necessary for launching the image library
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1,
+        });
+
+        console.log(result.uri);
+
+        if (!result.cancelled) {
+            setImage4(result.uri);
+        }
+    };
+
 
 
     return (
@@ -95,7 +113,7 @@ const CrearReceta = () => {
                         <IconButton icon={props => <Icon name="add-outline" size={40} />} onPress={pickImage3} />
                     </Box>
                 </Stack>
-                <View style={{ flexDirection: 'row', marginLeft: 10, marginTop: 3}}>
+                <View style={{ flexDirection: 'row', marginLeft: 10, marginTop: 3 }}>
                     <Image source={{ uri: image1 }} style={styles.image} />
                     <Image source={{ uri: image2 }} style={styles.image} />
                     <Image source={{ uri: image3 }} style={styles.image} />
@@ -125,9 +143,41 @@ const CrearReceta = () => {
                 </View>
 
                 <View>
-                    <View>
-                        <Text style={{ backgroundColor: '#FFC68C', width: '100%', display: 'flex', marginTop: 10, fontSize: 18 }}> Pasos </Text>
-                    </View>
+                    <Text style={{ backgroundColor: '#FFC68C', width: '100%', display: 'flex', marginTop: 10, fontSize: 18 }}> Pasos </Text>
+                    <VStack m={4} spacing={2} divider={true} style={{ backgroundColor: '#EBEBAD', borderRadius: 8 }}>
+                        {
+                            pasos.map((v, i) =>
+                                <View style={{ marginLeft: 2, marginTop: 5, flexDirection: 'row', justifyContent: 'space-between' }}>
+                                    <Box style={{ borderWidth: 3, backgroundColor: 'grey', borderRadius: 10 }}>
+                                        <IconButton icon={props => <Icon name="add-outline" size={40} />} onPress={pickImage4} />
+                                    </Box>
+                                    <Image source={{ uri: image4 }} style={styles.image} />
+                                    <TextInput fullWidth id="descripcion_receta" hiddenLabel color='#F1AE00' multiline={true} style={{marginRight: 10 ,width: '70%' }} placeholder='Explicacion' value={v.explicacion} onChange={(z) => {
+                                        const aux = [...pasos]
+                                        aux[i].explicacion = z.target.value
+                                        setPasos(aux)
+                                    }} />
+                                </View>
+                                
+                            )
+                        }
+                        <Pressable style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            paddingVertical: 12,
+                            paddingHorizontal: 32,
+                            borderRadius: 12,
+                            backgroundColor: '#F1AE00',
+                            width: 250,
+                            marginLeft: 80
+                        }}
+                            onPress={() => setPasos([...pasos, { uri: '', explicacion: '', pasoNum: 0 }])}
+                        >
+                            <Text>Agregar paso</Text>
+                        </Pressable>
+                    </VStack>
+
                     <View>
                         <Box style={{ borderRadius: 12, marginTop: 1 }}>
                             <View>
