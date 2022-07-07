@@ -2,7 +2,7 @@ import React, { useState, Component } from 'react';
 import { View, Text, Image, StyleSheet, FlatList, TouchableOpacity, StatusBar } from 'react-native';
 import { Stack, Icon, IconComponentProvider, TextInput } from "@react-native-material/core";
 import MaterialCommunityIcons from "@expo/vector-icons/Ionicons";
-//import Picker from 'react-native-picker-select';
+import Picker from 'react-native-picker-select';
 
 import NavBarSup from '../components/NavBarSup';
 import NavBarInf from '../components/NavBarInf';
@@ -111,6 +111,13 @@ const Busqueda = () => {
 
       <View style={{backgroundColor: '#EBEBAD'}}>
         <Stack spacing={2} style={{margin: 16}}>
+          <Picker selectedValue={filtro} style={{height: 30, width: '80%'}} onValueChange={(value) => setFiltro(value)}>
+            <Picker.item label= 'Usuario' value= 'Usuario'/>
+            <Picker.item label= 'Categoría' value= 'Categoría'/>
+            <Picker.item label= 'Ingrediente' value= 'Ingrediente'/>
+            <Picker.item label= 'No ingrediente' value= 'No ingrediente'/>
+            <Picker.item label= 'Nombre' value= 'Nombre'/>
+          </Picker>
           <TextInput
             variant="outlined"
             trailing={props => <IconButton icon={props => <Icon name="search" {...props} style={{ color: '#F1AE00' }} />} onPress={buscarRecetas} />}
