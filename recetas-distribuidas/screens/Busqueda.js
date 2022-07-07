@@ -49,11 +49,11 @@ const Busqueda = () => {
       <View style={{backgroundColor: '#EBEBAD'}}>
         <Stack spacing={2} style={{margin: 16}}>
           <Picker selectedValue={filtro} style={{height: 30, width: '80%'}} onValueChange={(value, itemIndex) => setFiltro(value)}>
-            <Picker.Item label='Usuario' value='Usuario'/>
-            <Picker.Item label='Categoría' value='Categoría'/>
-            <Picker.Item label='Ingrediente' value='Ingrediente'/>
-            <Picker.Item label='No ingrediente' value='Noingrediente'/>
-            <Picker.Item label='Nombre' value='Nombre'/>
+            <Picker.Item label='Usuario' value='usuario'/>
+            <Picker.Item label='Tipo' value='tipo'/>
+            <Picker.Item label='Ingrediente' value='ingrediente'/>
+            <Picker.Item label='No ingrediente' value='noingrediente'/>
+            <Picker.Item label='Nombre' value='nombre'/>
           </Picker>
           <TextInput
             variant="outlined"
@@ -76,7 +76,7 @@ const Busqueda = () => {
           <TouchableOpacity onPress={() => navigation.navigate('Receta', {item: item})}>
             <View style={{flexDirection: 'row', backgroundColor: '#F4F4F4', borderRadius: 12, width: '95%', marginLeft: 10}}>
               <Image
-                source={{}}
+                source={{uri: item.photoUrl}}
                 style={{width: 100, height: 100, margin: 5, borderRadius: 12}}
               />
               <View style={{height: 100, marginTop: 5}}>

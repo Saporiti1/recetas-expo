@@ -25,7 +25,7 @@ const Receta = () => {
 
   return (
     <View style={styles.container}>
-      <Image source={fullReceta.photoUrl} style={{width: '100%', height: 250}} />
+      <Image source={{uri: fullReceta.photoUrl}} style={{width: '100%', height: 250}} />
 
       <View style={{position: 'absolute', left: 10, top: StatusBar.currentHeight + 2}}>
         <IconButton icon={props => <Icon name="arrow-back-outline" size={40} style={{color: '#F1AE00'}} />} onPress={() => navigation.goBack()} />
