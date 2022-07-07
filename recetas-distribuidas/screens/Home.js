@@ -98,7 +98,7 @@ const Home = () => {
           justifyContent: 'center',
           alignItems: 'center'
         }}>
-          <Card style={{margin: 10, borderRadius: 20, backgroundColor: 'grey', width: '100%'}} onPress={() => navigation.navigate('Receta')}>
+          <Card style={{margin: 10, borderRadius: 20, backgroundColor: 'grey', width: '100%'}} onPress={() => navigation.navigate('Receta', {item : foodData})}>
             <CardImage
               //source={foodData.photoUrl}
               source={{uri: 'https://cdn.pixabay.com/photo/2016/08/31/17/41/sunrise-1634197_960_720.jpg' }}
@@ -125,45 +125,51 @@ const Home = () => {
             <ScrollView scrollEventThrottle={16}>
               <View style={{height: 170}}>
                 <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+                  
+                  <TouchableOpacity onPress={() => navigation.navigate('Receta', {item : recipeOne})}>
+                    <View style={{height: 170, width: 170, marginLeft: 20, borderWidth: 0.5, borderColor: '#dddddd' }}>
+                      <View style={{flex: 2}}>
+                        <Image
+                          //source={recipeOne.photoUrl}
+                          source={require('../media/imgLogin.png')}
+                          style={{flex: 1, width: null, height: null, resizeMode: 'cover'}}
+                        />
+                      </View>
+                      <View style={{flex: 1, paddingLeft: 20, backgroundColor: 'grey'}}>
+                        <Text>{recipeOne.name}</Text>
+                      </View>
+                    </View>
+                  </TouchableOpacity>
 
-                  <View style={{height: 170, width: 170, marginLeft: 20, borderWidth: 0.5, borderColor: '#dddddd' }}>
-                    <View style={{flex: 2}}>
-                      <Image
-                        //source={recipeOne.photoUrl}
-                        source={require('../media/imgLogin.png')}
-                        style={{flex: 1, width: null, height: null, resizeMode: 'cover'}}
-                      />
+                  <TouchableOpacity onPress={() => navigation.navigate('Receta', {item : recipeTwo})}> 
+                    <View style={{height: 170, width: 170, marginLeft: 20, borderWidth: 0.5, borderColor: '#dddddd' }}>
+                      <View style={{flex: 2}}>
+                        <Image
+                          //source={recipeTwo.photoUrl}
+                          source={require('../media/imgLogin.png')}
+                          style={{flex: 1, width: null, height: null, resizeMode: 'cover'}}
+                        />
+                      </View>
+                      <View style={{flex: 1, paddingLeft: 20, backgroundColor: 'grey'}}>
+                        <Text>{recipeTwo.name}</Text>
+                      </View>
                     </View>
-                    <View style={{flex: 1, paddingLeft: 20, backgroundColor: 'grey'}}>
-                      <Text>{recipeOne.name}</Text>
-                    </View>
-                  </View>
+                  </TouchableOpacity>
 
-                  <View style={{height: 170, width: 170, marginLeft: 20, borderWidth: 0.5, borderColor: '#dddddd' }}>
-                    <View style={{flex: 2}}>
-                      <Image
-                        //source={recipeTwo.photoUrl}
-                        source={require('../media/imgLogin.png')}
-                        style={{flex: 1, width: null, height: null, resizeMode: 'cover'}}
-                      />
+                  <TouchableOpacity onPress={() => navigation.navigate('Receta', {item : recipeThree})}> 
+                    <View style={{height: 170, width: 170, marginLeft: 20, borderWidth: 0.5, borderColor: '#dddddd' }}>
+                      <View style={{flex: 2}}>
+                        <Image
+                          //source={recipeThree.photoUrl}
+                          source={require('../media/imgLogin.png')}
+                          style={{flex: 1, width: null, height: null, resizeMode: 'cover'}}
+                        />
+                      </View>
+                      <View style={{flex: 1, paddingLeft: 20, backgroundColor: 'grey'}}>
+                        <Text>{recipeThree.name}</Text>
+                      </View>
                     </View>
-                    <View style={{flex: 1, paddingLeft: 20, backgroundColor: 'grey'}}>
-                      <Text>{recipeTwo.name}</Text>
-                    </View>
-                  </View>
-
-                  <View style={{height: 170, width: 170, marginLeft: 20, borderWidth: 0.5, borderColor: '#dddddd' }}>
-                    <View style={{flex: 2}}>
-                      <Image
-                        //source={recipeThree.photoUrl}
-                        source={require('../media/imgLogin.png')}
-                        style={{flex: 1, width: null, height: null, resizeMode: 'cover'}}
-                      />
-                    </View>
-                    <View style={{flex: 1, paddingLeft: 20, backgroundColor: 'grey'}}>
-                      <Text>{recipeThree.name}</Text>
-                    </View>
-                  </View>
+                  </TouchableOpacity>
 
                 </ScrollView>
 

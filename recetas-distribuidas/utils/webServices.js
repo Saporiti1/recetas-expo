@@ -9,7 +9,7 @@ const urlWebServices = {
 
   
   createRecipe: urlApi +"api/v1/recipes/recipe",
-  newReview: urlApi +"api/v1/recipes/recipe/review/{recipeId}",
+  newReview: urlApi +"api/v1/recipes/recipe/review/",
   searchRecipes: urlApi +"api/v1/recipes/recipes",
 
 }

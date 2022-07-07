@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { View, Image, Pressable, ScrollView, StyleSheet, StatusBar, FlatList } from 'react-native';
+import { View, Image, Pressable, ScrollView, StyleSheet, StatusBar, FlatList, TouchableOpacity } from 'react-native';
 import { Icon, IconComponentProvider, IconButton, Text, VStack } from "@react-native-material/core";
 import MaterialCommunityIcons from "@expo/vector-icons/Ionicons";
 import { useNavigation, useRoute } from '@react-navigation/native';
 import MaterialTabs from 'react-native-material-tabs';
+
 import Carousel from '../components/Carousel';
 import Rating from '../components/Rating';
 
@@ -14,6 +15,7 @@ const Receta = () => {
   const fullReceta = route.params.item;
   const ingredientes = fullReceta.recipeIngredientSet;
   const pasos = fullReceta.steps;
+
   const [selectedTab, setSelectedTab] = useState(0);
   
   const ratingPromedio = (ratingReceta) => {
@@ -40,10 +42,10 @@ const Receta = () => {
         </View>
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
 
-          <Pressable onPress={() => navigation.navigate('Comentarios')} style={{flexDirection: 'row', justifyContent: 'space-between'}} >
+          <TouchableOpacity onPress={() => navigation.navigate('Comentarios', {comments: fullReceta.ratingSet, nombre: fullReceta.name})} style={{flexDirection: 'row', justifyContent: 'space-between'}} >
             <Rating rating={ratingPromedio(fullReceta.ratingSet)} />
             <Text>{fullReceta.ratingSet.length}</Text>
-          </Pressable>
+          </TouchableOpacity>
 
 
           <View style={{ backgroundColor: '#EBEBAD', flexDirection: 'row', borderRadius: 5, height: 25, right: 10}}>

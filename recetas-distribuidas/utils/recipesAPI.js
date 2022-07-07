@@ -1,5 +1,35 @@
 import urlWebServices from "./webServices";
 
+export const newReview = async function (stars, comment, idComment) {
+  let url = urlWebServices.newReview + idComment;
+
+  try {
+    let response = await fetch(url, {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        stars: stars,
+        comment: comment
+      }) 
+    });
+
+    if(response.status == 200) {
+      return 200;
+    }
+    else {
+      //return response.status;
+      return 404;
+    }
+
+  } 
+  catch (error) {
+    return 500;    
+  }
+}
 
 export const loginUser = async function (userName, userPass) {
   let url = urlWebServices.loginUser;
