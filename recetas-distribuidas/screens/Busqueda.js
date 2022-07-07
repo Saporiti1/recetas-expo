@@ -45,32 +45,31 @@ function useCounter() {
 }
 
 
-
+//ESTO Y EL FLATLIST NO ME SIRVEN, NECESITO ENVIARLE MÁS PARÁMETROS... 
 class FlatListItem extends Component {
   render() {
 
     return (
       <View>
-        <View style={{ flexDirection: 'row', backgroundColor: '#F4F4F4', borderRadius: 12, width: '95%', marginLeft: 10 }}>
+        <View style={{flexDirection: 'row', backgroundColor: '#F4F4F4', borderRadius: 12, width: '95%', marginLeft: 10}}>
           <Image
             source={{}}
-            style={{ width: 100, height: 100, margin: 5, borderRadius: 12 }}
+            style={{width: 100, height: 100, margin: 5, borderRadius: 12}}
           />
-          <View style={{ height: 100, marginTop: 5 }}>
+          <View style={{height: 100, marginTop: 5}}>
             <Text>NOMBRE</Text>
             <Text>AUTOR</Text>
 
-            <View style={{ flexDirection: 'row', marginTop: 35, justifyContent: 'space-between' }}>
+            <View style={{flexDirection: 'row', marginTop: 35, justifyContent: 'space-between'}}>
+              <Text style={{width: '65%'}}>Aca va el rating</Text>
 
-              <Text style={{ width: '65%' }}>Aca va el rating</Text>
-
-              <Icon name="bookmark-sharp" size={25} style={{ color: '#F1AE00' }} />
+              <Icon name="bookmark-sharp" size={25} style={{color: '#F1AE00'}} />
             </View>
           </View>
 
         </View>
 
-        <View style={{ height: 3, backgroundColor: 'white' }}>
+        <View style={{height: 3, backgroundColor: 'white'}}>
 
         </View>
       </View>
@@ -85,19 +84,25 @@ class FlatListItem extends Component {
 const Busqueda = () => {
   const [filtro, setFiltro] = useState('');
   const [inputSearch, setInputSearch] = useState('');
+  const [recipesScroll, setRecipesScroll] = useState([]);
 
 
   //VER BIEN ESTO...
   const buscarRecetas = async () => {
-    const recipeDataApi = await searchSomeRecipes();
+    const recipeDataApi = await searchSomeRecipes(filtro, inputSearch);
+    setRecipesScroll(recipeDataApi);
     console.log(recipeDataApi.length);
-    console.log('filtro' + filtro);
   }
 
   //VER BIEN ESTO...
   /*useEffect(() => {
     buscarRecetas();
   }, [])*/
+
+  const ratingPromedio = (ratingReceta) => {
+    const avgRating = ratingReceta.map(item => item.rating).reduce((a, b) => a + b, 0);
+    return Math.round(avgRating / ratingReceta.length);
+  }
 
 
   return (
@@ -124,16 +129,37 @@ const Busqueda = () => {
           
         </Stack>
       </View>
-      <View style={{ height: 3, backgroundColor: 'white' }}>
+      <View style={{height: 3, backgroundColor: 'white'}}>
 
       </View>
 
+      <View style={{height: 50}}>
+        {recipesScroll.map((item) => {
+          <TouchableOpacity>
+            <View style={{flexDirection: 'row', backgroundColor: '#F4F4F4', borderRadius: 12, width: '95%', marginLeft: 10}}>
+              <Image
+                source={{}}
+                style={{width: 100, height: 100, margin: 5, borderRadius: 12}}
+              />
+              <View style={{height: 100, marginTop: 5}}>
+                <Text>{item.name}</Text>
+                <Text>{item.user.name}</Text>
 
+                <View style={{flexDirection: 'row', marginTop: 35, justifyContent: 'space-between'}}>
+                  <Text style={{width: '65%'}}>{ratingPromedio(item.ratingSet)}</Text>
 
+                  <Icon name="bookmark-sharp" size={25} style={{color: '#F1AE00'}} />
+                </View>
+              </View>
+              <View style={{height: 3, backgroundColor: '#F4F4F4'}} />
 
-      <View style={{ height: 50 }}>
+            </View>
+          </TouchableOpacity>
+        })
 
+        }
       </View>
+
       <NavBarInf />
     </View>
   );
@@ -146,7 +172,7 @@ export default () => (
 
 /*
 <FlatList
-          data={itemData}
+          data={recipesScroll}
           renderItem={({ item, index }) => {
             return (
               <FlatListItem item={item} index={index} />
