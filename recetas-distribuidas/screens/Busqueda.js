@@ -1,8 +1,10 @@
 import React, { useState, Component } from 'react';
 import { View, Text, Image, StyleSheet, FlatList, TouchableOpacity, StatusBar } from 'react-native';
-import { Stack, Icon, IconComponentProvider, TextInput } from "@react-native-material/core";
+import { Stack, Icon, IconComponentProvider, TextInput, IconButton } from "@react-native-material/core";
 import MaterialCommunityIcons from "@expo/vector-icons/Ionicons";
-import Picker from 'react-native-picker-select';
+import {Picker} from '@react-native-picker/picker';
+import { useNavigation } from '@react-navigation/native';
+
 
 import NavBarSup from '../components/NavBarSup';
 import NavBarInf from '../components/NavBarInf';
@@ -12,76 +14,11 @@ const starImgFilled = 'https://github.com/tranhonghan/images/blob/main/star_fill
 const starImgCorner = 'https://github.com/tranhonghan/images/blob/main/star_corner.png?raw=true';
 
 
-function useCounter() {
-  const [defaultRating, setDefaultRating] = useState(4);
-  const [maxRating, setMaxRating] = useState([1, 2, 3, 4, 5]);
-
-  const CustomRatingBar = () => {
-    const [recipesScroll, setRecipesScroll] = useState([]);
-
-    return (
-      <View style={styles.customRatingBarStyle}>
-        {
-          maxRating.map((item, key) => {
-            return (
-              <TouchableOpacity
-                activeOpactity={0.7}
-                key={item}
-              >
-                <Image
-                  style={styles.starImgStyle}
-                  source={
-                    item <= defaultRating
-                      ? { uri: starImgFilled }
-                      : { uri: starImgCorner }
-                  }
-                />
-              </TouchableOpacity>)
-          })
-        }
-      </View>
-    )
-  }
-}
-
-
 //ESTO Y EL FLATLIST NO ME SIRVEN, NECESITO ENVIARLE MÁS PARÁMETROS... 
-class FlatListItem extends Component {
-  render() {
-
-    return (
-      <View>
-        <View style={{flexDirection: 'row', backgroundColor: '#F4F4F4', borderRadius: 12, width: '95%', marginLeft: 10}}>
-          <Image
-            source={{}}
-            style={{width: 100, height: 100, margin: 5, borderRadius: 12}}
-          />
-          <View style={{height: 100, marginTop: 5}}>
-            <Text>NOMBRE</Text>
-            <Text>AUTOR</Text>
-
-            <View style={{flexDirection: 'row', marginTop: 35, justifyContent: 'space-between'}}>
-              <Text style={{width: '65%'}}>Aca va el rating</Text>
-
-              <Icon name="bookmark-sharp" size={25} style={{color: '#F1AE00'}} />
-            </View>
-          </View>
-
-        </View>
-
-        <View style={{height: 3, backgroundColor: 'white'}}>
-
-        </View>
-      </View>
-    );
-  }
-}
-
-
-
 
 
 const Busqueda = () => {
+  const navigation = useNavigation();
   const [filtro, setFiltro] = useState('');
   const [inputSearch, setInputSearch] = useState('');
   const [recipesScroll, setRecipesScroll] = useState([]);
@@ -111,12 +48,12 @@ const Busqueda = () => {
 
       <View style={{backgroundColor: '#EBEBAD'}}>
         <Stack spacing={2} style={{margin: 16}}>
-          <Picker selectedValue={filtro} style={{height: 30, width: '80%'}} onValueChange={(value) => setFiltro(value)}>
-            <Picker.item label= 'Usuario' value= 'Usuario'/>
-            <Picker.item label= 'Categoría' value= 'Categoría'/>
-            <Picker.item label= 'Ingrediente' value= 'Ingrediente'/>
-            <Picker.item label= 'No ingrediente' value= 'No ingrediente'/>
-            <Picker.item label= 'Nombre' value= 'Nombre'/>
+          <Picker selectedValue={filtro} style={{height: 30, width: '80%'}} onValueChange={(value, itemIndex) => setFiltro(value)}>
+            <Picker.Item label='Usuario' value='Usuario'/>
+            <Picker.Item label='Categoría' value='Categoría'/>
+            <Picker.Item label='Ingrediente' value='Ingrediente'/>
+            <Picker.Item label='No ingrediente' value='Noingrediente'/>
+            <Picker.Item label='Nombre' value='Nombre'/>
           </Picker>
           <TextInput
             variant="outlined"
@@ -135,7 +72,8 @@ const Busqueda = () => {
 
       <View style={{height: 50}}>
         {recipesScroll.map((item) => {
-          <TouchableOpacity>
+          return (
+          <TouchableOpacity onPress={() => navigation.navigate('Receta', {item: item})}>
             <View style={{flexDirection: 'row', backgroundColor: '#F4F4F4', borderRadius: 12, width: '95%', marginLeft: 10}}>
               <Image
                 source={{}}
@@ -155,6 +93,7 @@ const Busqueda = () => {
 
             </View>
           </TouchableOpacity>
+          )
         })
 
         }

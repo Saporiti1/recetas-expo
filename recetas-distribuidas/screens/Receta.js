@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Image, Pressable, ScrollView, StyleSheet, StatusBar, FlatList } from 'react-native';
 import { Icon, IconComponentProvider, IconButton, Text, VStack } from "@react-native-material/core";
 import MaterialCommunityIcons from "@expo/vector-icons/Ionicons";
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import MaterialTabs from 'react-native-material-tabs';
 import Carousel from '../components/Carousel';
 import Rating from '../components/Rating';
@@ -10,12 +10,20 @@ import Rating from '../components/Rating';
 
 const Receta = () => {
   const navigation = useNavigation();
+  const route = useRoute();
+  const fullReceta = route.params.item;
+  const ingredientes = fullReceta.recipeIngredientSet;
+  const pasos = fullReceta.steps;
   const [selectedTab, setSelectedTab] = useState(0);
-
+  
+  const ratingPromedio = (ratingReceta) => {
+    const avgRating = ratingReceta.map(item => item.rating).reduce((a, b) => a + b, 0);
+    return Math.round(avgRating / ratingReceta.length);
+  }
 
   return (
     <View style={styles.container}>
-      <Image source={require('../media/Receta1.png')} style={{width: '100%', height: 250}} />
+      <Image source={fullReceta.photoUrl} style={{width: '100%', height: 250}} />
 
       <View style={{position: 'absolute', left: 10, top: StatusBar.currentHeight + 2}}>
         <IconButton icon={props => <Icon name="arrow-back-outline" size={40} style={{color: '#F1AE00'}} />} onPress={() => navigation.goBack()} />
@@ -24,8 +32,8 @@ const Receta = () => {
       <ScrollView>
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
           <View style={{flexDirection: 'column'}}>
-            <Text style={{marginLeft: 5}}> Fideos con salsa </Text>
-            <Text style={{marginLeft: 5}}> por  Author </Text>
+            <Text style={{marginLeft: 5}}>{fullReceta.name}</Text>
+            <Text style={{marginLeft: 5}}>{fullReceta.user.name}</Text>
           </View>
 
           <Icon name="bookmark-outline" size={30} style={{color: '#F1AE00', right: 10}} />
@@ -33,15 +41,15 @@ const Receta = () => {
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
 
           <Pressable onPress={() => navigation.navigate('Comentarios')} style={{flexDirection: 'row', justifyContent: 'space-between'}} >
-            <Rating rating={3} />
-            <Text>(289)</Text>
+            <Rating rating={ratingPromedio(fullReceta.ratingSet)} />
+            <Text>{fullReceta.ratingSet.length}</Text>
           </Pressable>
 
 
           <View style={{ backgroundColor: '#EBEBAD', flexDirection: 'row', borderRadius: 5, height: 25, right: 10}}>
-            <Text>3</Text>
+            <Text>  {fullReceta.portions}</Text>
             <Icon name="pizza" size={20} style={{color: '#F1AE00'}} />
-            <Text style={{marginLeft: 5}}>9</Text>
+            <Text style={{marginLeft: 5}}> {fullReceta.numberPeople}</Text>
             <Icon name="body" size={20} style={{color: '#F1AE00'}} />
           </View>
         </View>
@@ -59,36 +67,26 @@ const Receta = () => {
             selectedTab == 0 ?
 
               <Text variant="body2" style={{ marginLeft: 5 }}>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos
-                blanditiis tenetur unde suscipit, quam beatae rerum inventore consectetur,
-                neque doloribus, cupiditate numquam dignissimos laborum fugiat deleniti?
-                Eum quasi quidem quibusdam.
-                body2. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos
-                blanditiis tenetur unde suscipit, quam beatae rerum inventore consectetur,
-                neque doloribus, cupiditate numquam dignissimos laborum fugiat deleniti?
-                Eum quasi quidem quibusdam.
-                body2. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos
-                blanditiis tenetur unde suscipit, quam beatae rerum inventore consectetur,
-                neque doloribus, cupiditate numquam dignissimos laborum fugiat deleniti?
-                Eum quasi quidem quibusdam.
-                body2. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos
-                blanditiis tenetur unde suscipit, quam beatae rerum inventore consectetur,
-                neque doloribus, cupiditate numquam dignissimos laborum fugiat deleniti?
-                Eum quasi quidem quibusdam.
+                {fullReceta.description}
               </Text>
 
               : selectedTab == 1 ?
-
-                <Carousel />
+                <View>
+                  {
+                    pasos.map((item) => {
+                      <Carousel carouselItems={(item) => {this.carouselItems(item)}} />
+                    })
+                  }
+                  </View>
 
                 : selectedTab == 2 ?
                   <View>
                     {
-                      itemData.map((item) => (
+                      ingredientes.map((item) => (
                         <View style={{marginLeft: 2, padding: 5, flexDirection: 'row', justifyContent: 'space-between'}}>
                           <Text style={{fontWeight: 'bold'}}> {'\u2B24'}</Text>
-                          <Text>{item.nombreIngrediente}</Text>
-                          <Text>{item.cantidadIngrediente}</Text>
+                          <Text>{item.ingredient.name}</Text>
+                          <Text>{item.quantity}</Text>
                         </View>
                       ))
                     }
@@ -130,22 +128,3 @@ const styles = StyleSheet.create({
   }
 });
 
-
-const itemData = [
-  {
-    nombreIngrediente: 'Sal',
-    cantidadIngrediente: 6,
-  },
-  {
-    nombreIngrediente: 'Pimienta',
-    cantidadIngrediente: 6,
-  },
-  {
-    nombreIngrediente: 'Queso',
-    cantidadIngrediente: 6,
-  },
-  {
-    nombreIngrediente: 'Huevos',
-    cantidadIngrediente: 6,
-  },
-];
