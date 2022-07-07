@@ -177,34 +177,8 @@ const CrearReceta = () => {
                             <Text>Agregar paso</Text>
                         </Pressable>
                     </VStack>
-
-                    <View>
-                        <Box style={{ borderRadius: 12, marginTop: 1 }}>
-                            <View>
-                                {itemData.map((item) => (
-                                    <Box style={{ display: 'flex', flexDirection: 'row', borderRadius: 12, boxShadow: 1, fontWeight: 'bold', backgroundColor: '#EBEBAD', }} >
-                                        <Image source={{ uri: item.img }} style={{ width: 110, height: 110, marginLeft: 1, borderRadius: 12 }} />
-
-                                        <View style={{ paddingLeft: 5, width: '73%' }} >
-                                            <Text style={{ fontSize: 16, color: 'brown' }}>{item.step}</Text>
-                                            <Text style={{ fontSize: 12 }}>{item.descripcion}</Text>
-                                        </View>
-                                    </Box>
-                                ))}
-                            </View>
-                        </Box>
-                    </View>
-                    <View style={{ flexDirection: 'row', marginTop: 5, backgroundColor: '#EBEBAD' }} >
-                        <Box style={{ borderWidth: 3, backgroundColor: 'grey', borderRadius: 12, width: 110, height: 110 }}>
-                            <IconButton icon={props => <Icon name="add-outline" size={40} />} style={{ width: 105, height: 100 }} />
-                        </Box>
-                        <View style={{ paddingLeft: 5, width: '96%' }}>
-                            <Text style={{ fontSize: 16, color: 'brown' }}>NUEVO PASO</Text>
-                            <TextInput fullWidth id="descripcion_receta" hiddenLabel color='white' multiline={true} />
-                        </View>
-
-                    </View>
                 </View>
+                
                 <View>
                     <Text style={{ backgroundColor: '#FFC68C', width: '100%', display: 'flex', marginTop: 10, fontSize: 18 }}> Ingredientes </Text>
                     <VStack m={4} spacing={2} divider={true} style={{ backgroundColor: '#EBEBAD', borderRadius: 8 }}>
