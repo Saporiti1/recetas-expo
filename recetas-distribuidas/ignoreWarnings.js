@@ -10,6 +10,8 @@ if (__DEV__) {
     "exported from 'deprecated-react-native-prop-types'.",
     "Non-serializable values were found in the navigation state.",
     "VirtualizedLists should never be nested inside plain ScrollViews",
+    'Warning: Each child in a list should have a unique "key" prop.%s%s See https://reactjs.org/link/warning-keys for more information.%s, ',
+    ''
   ];
 
   const warn = console.warn;
@@ -22,5 +24,5 @@ if (__DEV__) {
     warn(...arg);
   };
 
-  LogBox.ignoreLogs(ignoreWarns);
+  LogBox.ignoreAllLogs();
 }
