@@ -8,11 +8,11 @@ export default class App extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = props;
+    this.state = {carouselItems:[props.pasos]}
+    console.log(props.pasos);
   }
-  /*state = {
-    carouselItems: [{}]
-  };*/
+
+//source={{uri: item.multimediaSet[0].contentUrl}}
 
   _renderItem({item, index}) {
     return (
@@ -24,7 +24,7 @@ export default class App extends React.Component {
         marginLeft: 20,
         marginRight: 20,
       }}>
-        <Image source={{uri: item.img}} style={{width: '100%', height: '50%', borderRadius: 5}} />
+        <Image source={require('../media/imgLogin.png')} style={{width: '100%', height: '50%', borderRadius: 5}} />
         <Text style={{fontSize: 30}}>{item.stepNumber}</Text>
         <Text>{item.text}</Text>
       </View>
@@ -33,14 +33,14 @@ export default class App extends React.Component {
   }
 
   render() {
-    console.log(this.props);
+    //console.log("RENDER: " + this.state.carouselItems);
     return (
       <SafeAreaView style={{flex: 1, paddingTop: 20}}>
         <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center'}}>
           <Carousel
             layout={"default"}
             ref={ref => this.carousel = ref}
-            data={this.props}
+            data={this.state.carouselItems}
             sliderWidth={300}
             itemWidth={350}
             renderItem={this._renderItem}
