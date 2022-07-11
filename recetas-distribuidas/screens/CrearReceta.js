@@ -4,6 +4,8 @@ import { Icon, IconComponentProvider, Stack, TextInput, Box, IconButton, VStack 
 import MaterialCommunityIcons from "@expo/vector-icons/Ionicons";
 import { useNavigation } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
+import {Picker} from '@react-native-picker/picker';
+
 
 
 import NavBarSup from '../components/NavBarSup';
@@ -25,9 +27,9 @@ const CrearReceta = () => {
     const [valores, setValores] = useState([]);
     const [pasos, setPasos] = useState([]);
     const [image1, setImage1] = useState(null);
-    const [image2, setImage2] = useState(null);
-    const [image3, setImage3] = useState(null);
     const [image4, setImage4] = useState(null);
+    const [filtro, setFiltro] = useState('');
+
 
 
     const pickImage1 = async () => {
@@ -106,17 +108,9 @@ const CrearReceta = () => {
                     <Box style={{ borderWidth: 3, backgroundColor: 'grey', borderRadius: 10 }}>
                         <IconButton icon={props => <Icon name="add-outline" size={40} />} onPress={pickImage1} />
                     </Box>
-                    <Box style={{ borderWidth: 3, backgroundColor: 'grey', borderRadius: 10 }}>
-                        <IconButton icon={props => <Icon name="add-outline" size={40} />} onPress={pickImage2} />
-                    </Box>
-                    <Box style={{ borderWidth: 3, backgroundColor: 'grey', borderRadius: 10 }}>
-                        <IconButton icon={props => <Icon name="add-outline" size={40} />} onPress={pickImage3} />
-                    </Box>
                 </Stack>
                 <View style={{ flexDirection: 'row', marginLeft: 10, marginTop: 3 }}>
                     <Image source={{ uri: image1 }} style={styles.image} />
-                    <Image source={{ uri: image2 }} style={styles.image} />
-                    <Image source={{ uri: image3 }} style={styles.image} />
                 </View>
             </View>
 
@@ -152,13 +146,13 @@ const CrearReceta = () => {
                                         <IconButton icon={props => <Icon name="add-outline" size={40} />} onPress={pickImage4} />
                                     </Box>
                                     <Image source={{ uri: image4 }} style={styles.image} />
-                                    <TextInput fullWidth id="descripcion_receta" hiddenLabel color='#F1AE00' multiline={true} style={{marginRight: 10 ,width: '70%' }} placeholder='Explicacion' value={v.explicacion} onChange={(z) => {
+                                    <TextInput fullWidth id="descripcion_receta" hiddenLabel color='#F1AE00' multiline={true} style={{ marginRight: 10, width: '70%' }} placeholder='Explicacion' value={v.explicacion} onChange={(z) => {
                                         const aux = [...pasos]
                                         aux[i].explicacion = z.target.value
                                         setPasos(aux)
                                     }} />
                                 </View>
-                                
+
                             )
                         }
                         <Pressable style={{
@@ -178,7 +172,7 @@ const CrearReceta = () => {
                         </Pressable>
                     </VStack>
                 </View>
-                
+
                 <View>
                     <Text style={{ backgroundColor: '#FFC68C', width: '100%', display: 'flex', marginTop: 10, fontSize: 18 }}> Ingredientes </Text>
                     <VStack m={4} spacing={2} divider={true} style={{ backgroundColor: '#EBEBAD', borderRadius: 8 }}>
@@ -191,11 +185,17 @@ const CrearReceta = () => {
                                         aux[i].ingrediente = z.target.value
                                         setValores(aux)
                                     }} />
-                                    <TextInput id="NombreReceta" variant="standard" color='#F1AE00' style={{ width: '40%' }} placeholder='Cantidad' value={v.cantidad} onChange={(z) => {
+                                    <TextInput id="NombreReceta" variant="standard" color='#F1AE00' keyboardType='numeric' style={{ width: '20%' }} placeholder='Cantidad' value={v.cantidad} onChange={(z) => {
                                         const aux = [...valores]
                                         aux[i].cantidad = z.target.value
                                         setValores(aux)
                                     }} />
+                                    <Picker selectedValue={v.unidad} style={{ height: 30, width: '30%' }} onValueChange={(value, itemIndex) => setValores(value)}>
+                                        <Picker.Item label='Kg' value='kg' />
+                                        <Picker.Item label='Lt' value='lt' />
+                                        <Picker.Item label='Cm3' value='cm3' />
+                                        <Picker.Item label='mml' value='mml' />
+                                    </Picker>
                                 </View>
                             )
                         }
@@ -210,7 +210,7 @@ const CrearReceta = () => {
                             width: 250,
                             marginLeft: 80
                         }}
-                            onPress={() => setValores([...valores, { ingrediente: '', cantidad: 0 }])}
+                            onPress={() => setValores([...valores, { ingrediente: '', cantidad: 0, unidad: '' }])}
                         >
                             <Text>Agregar Ingrediente</Text>
                         </Pressable>
@@ -220,12 +220,12 @@ const CrearReceta = () => {
                 <View>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                         <Text style={{ fontSize: 18, backgroundColor: '#FFC68C', paddingTop: 10, width: '50%' }}>Cantidad de personas</Text>
-                        <TextInput id="NombreReceta" variant="standard" color='#F1AE00' style={{ width: '40%' }} placeholder='Cantidad' />
+                        <TextInput id="NombreReceta" variant="standard" keyboardType='numeric' color='#F1AE00' style={{ width: '40%', marginRight: 15 }} placeholder='Cantidad' />
                     </View>
 
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingTop: 5 }}>
                         <Text style={{ fontSize: 18, backgroundColor: '#FFC68C', paddingTop: 10, width: '50%' }}>Cantidad de porciones</Text>
-                        <TextInput id="NombreReceta" variant="standard" color='#F1AE00' style={{ width: '40%' }} placeholder='Cantidad' />
+                        <TextInput id="NombreReceta" variant="standard" keyboardType='numeric' color='#F1AE00' style={{ width: '40%', marginRight: 15 }} placeholder='Cantidad' />
                     </View>
                 </View>
 

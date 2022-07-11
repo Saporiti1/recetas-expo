@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, TextInput, SafeAreaView, StyleSheet, Alert, Pressable, StatusBar } from 'react-native';
+import { View, Text, Image, TextInput, SafeAreaView, StyleSheet, Alert, Pressable, StatusBar, Modal } from 'react-native';
 
 
 import { loginUser } from '../utils/recipesAPI';
@@ -9,6 +9,7 @@ import { loginUser } from '../utils/recipesAPI';
 const Login = ({ navigation }) => {
   const [textUser, onChangeTextUser] = useState("");
   const [textPass, onChangeTextPass] = useState("");
+  const [modalVisible, setModalVisible] = useState(false);
 
   //const [aviso, setAviso] = useState('');
 
@@ -18,17 +19,23 @@ const Login = ({ navigation }) => {
     const userDataAPI = await loginUser(textUser, textPass);
 
     //console.log(userDataAPI);
-    if(userDataAPI == 200) {
+    if (userDataAPI == 200) {
       //setAviso(<Alert severity="success">Todo en orden</Alert>);
       setTimeout(() => {
         navigation.navigate('Home');
       }, 1000);
-    } 
+    }
     else {
-      /*setAviso(<Alert severity="error">El usuario no existe</Alert>);
-      setTimeout(() => {
-        setAviso('');
-      }, 1500);*/
+      Alert.alert(
+        'ERROR',
+        'Usuario y/o contraseña erroneos',
+        [
+          {
+            text: 'OK',
+            onPress: () => console.log('OK Pressed')
+          },
+        ]
+      );
     }
   }
 
