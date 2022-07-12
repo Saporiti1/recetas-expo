@@ -75,9 +75,7 @@ const Receta = () => {
               : selectedTab == 1 ?
                 <View>
                   {
-                    pasos.map((item) => {
-                      <Carousel carouselItems={(item) => {this.carouselItems(item)}} />
-                    })
+                    <Carousel pasos={pasos} />
                   }
                   </View>
 

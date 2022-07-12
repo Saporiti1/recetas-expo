@@ -55,8 +55,7 @@ const Home = () => {
 
   //<Text>{recipesScroll[0].name}</Text>
 
-  const CustomRatingBar = () => {
-
+  const CustomRatingBar = (foodRating) => {
     return (
       <View style={styles.customRatingBarStyle}>
         {
@@ -108,7 +107,7 @@ const Home = () => {
             <Text>{`${foodData.name}`}</Text>
             <Text>{'por ' + `${userData.name}`}</Text>
             <CardAction separator={false} inColumn={false} style={{justifyContent: 'space-between'}}>
-              <Rating rating={foodRating}/>
+              <Text> {CustomRatingBar(foodRating)} </Text>
 
               <Icon name="bookmark-outline" size={25} style={{marginRight: 10, color: '#F1AE00'}}/>
 
