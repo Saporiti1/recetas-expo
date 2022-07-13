@@ -5,7 +5,7 @@ import MaterialCommunityIcons from "@expo/vector-icons/Ionicons";
 import { useNavigation, useRoute } from '@react-navigation/native';
 import MaterialTabs from 'react-native-material-tabs';
 
-import Carousel from '../components/Carousel';
+import Carousell from '../components/Carousell';
 import Rating from '../components/Rating';
 
 
@@ -76,7 +76,7 @@ const Receta = () => {
               : selectedTab == 1 ?
                 <View>
                   {
-                    <Carousel pasos={pasos} />
+                    <Carousell pasos={pasos} />
                   }
                   </View>
 

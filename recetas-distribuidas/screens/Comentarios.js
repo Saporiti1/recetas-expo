@@ -4,13 +4,13 @@ import { IconButton, Icon, IconComponentProvider, Divider, Provider, Stack, Butt
     Dialog, DialogHeader, DialogContent, DialogActions, TextInput } from "@react-native-material/core";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { useNavigation, useRoute } from '@react-navigation/native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
 import Rating from '../components/Rating';
 import RatingDinamico from '../components/RatingDinamico';
 import NavBarSup from '../components/NavBarSup';
 import { newReview } from '../utils/recipesAPI';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
 const Comentarios = () => {
