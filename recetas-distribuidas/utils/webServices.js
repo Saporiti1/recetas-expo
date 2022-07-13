@@ -6,11 +6,14 @@ const urlWebServices = {
   requestPasswordReset: urlApi +"api/v1/users/requestPasswordReset",
   passwordReset: urlApi +"api/v1/users/passwordReset",
   addAccountDetails: urlApi +"api/v1/users/addAccountDetails",
-
   
   createRecipe: urlApi +"api/v1/recipes/recipe",
-  newReview: urlApi +"api/v1/recipes/recipe/review/",
   searchRecipes: urlApi +"api/v1/recipes/recipes",
+  newReview: urlApi +"api/v1/recipes/recipe/review/",
+
+  getFavoriteRecipes: urlApi +"api/v1/users/favoriteRecipe/",
+  addFavoriteRecipe: urlApi +"api/v1/users/favoriteRecipe",
+  deleteFavoriteRecipe: urlApi +"api/v1/users/favoriteRecipe",
 
 }
 

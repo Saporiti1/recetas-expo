@@ -1,5 +1,101 @@
 import urlWebServices from "./webServices";
 
+
+export const getFavoriteRecipes = async function (idUser) {
+  let url = urlWebServices.getFavoriteRecipes + idUser;
+
+  try {
+    let response = await fetch(url, {
+      method: 'GET',
+      mode: 'cors',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      }
+    });
+
+    let datax = await response.json();
+
+    //console.log('EN EL TRY response ' + response);
+    //console.log('EN EL TRY' + response.status);
+
+    /*if(response.status === 200) {
+      return response;
+    }
+    else {
+      return response.status;
+    }*/
+    return datax;
+
+  } 
+  catch (error) {
+    console.log('EN EL CATCH' + error);
+    return 500;    
+  }
+}
+
+export const deleteFavoriteRecipe = async function (idUser, idRecipe) {
+  let url = urlWebServices.deleteFavoriteRecipe;
+
+  try {
+    let response = await fetch(url, {
+      method: 'DELETE',
+      mode: 'cors',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        idUser: idUser,
+        idRecipe: idRecipe
+      }) 
+    });
+
+    if(response.status == 200) {
+      return 200;
+    }
+    else {
+      return 404;
+    }
+
+  } 
+  catch (error) {
+    return 500;    
+  }
+}
+
+export const addFavoriteRecipe = async function (idUser, idRecipe) {
+  let url = urlWebServices.addFavoriteRecipe;
+
+  try {
+    let response = await fetch(url, {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        idUser: idUser,
+        idRecipe: idRecipe
+      }) 
+    });
+
+    if(response.status == 200) {
+      return 200;
+    }
+    else {
+      return 404;
+    }
+
+  } 
+  catch (error) {
+    return 500;    
+  }
+}
+
+
+
 export const newReview = async function (stars, comment, idComment) {
   let url = urlWebServices.newReview + idComment;
 
@@ -89,7 +185,6 @@ export const searchRecipes = async function () {
     return datax;
 
   } catch (error) {
-    console.log('EN EL CATCH ' + url);
     console.log(error);
     return 500;
   }

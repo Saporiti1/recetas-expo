@@ -1,158 +1,121 @@
-import React, { Component } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import { View, Image, StyleSheet, FlatList, Dimensions, StatusBar, Text } from 'react-native';
-import { Icon, IconComponentProvider, Stack, TextInput } from "@react-native-material/core";
+import { Icon, IconComponentProvider } from "@react-native-material/core";
 import MaterialCommunityIcons from "@expo/vector-icons/Ionicons";
-import RNPickerSelect from 'react-native-picker-select';
-import Rating from '../components/Rating';
 
 import NavBarSup from '../components/NavBarSup';
 import NavBarInf from '../components/NavBarInf';
+import { getFavoriteRecipes } from '../utils/recipesAPI';
 
-const itemData = [
-    {
-        img: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e',
-        title: 'Breakfast',
-        author: '@elmichael'
-    },
-    {
-        img: 'https://images.unsplash.com/photo-1551782450-a2132b4ba21d',
-        title: 'Burger',
-        author: '@elmichael'
-    },
-    {
-        img: 'https://images.unsplash.com/photo-1522770179533-24471fcdba45',
-        title: 'Camera',
-        author: '@elmichael'
-    },
-    {
-        img: 'https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c',
-        title: 'Coffee',
-        author: '@jordan'
-    },
-    {
-        img: 'https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c',
-        title: 'Coffee',
-        author: '@jordan'
-    },
-    {
-        img: 'https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c',
-        title: 'Coffee',
-        author: '@jordan'
-    },
-    {
-        img: 'https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c',
-        title: 'Coffee',
-        author: '@jordan'
-    },
-];
 
 const numColumns = 2
 const WIDTH = Dimensions.get('window').width;
 
+//LE SAQUE EL RATING PORQUE ERA MÁS COMPLEJO PARA CALCULARLO... IGUAL LO DEJO COMENTADO ACÁ ABAJO...
+/*<View style={{flexDirection: 'row', marginTop: 35, justifyContent: 'space-between'}}>
+    <Rating rating={3}/>
+    <Icon name="bookmark-sharp" size={25} style={{color: '#F1AE00', paddingLeft: 100}}/>
+  </View>*/
+
 class FlatListItem extends Component {
-    render() {
+  render() {
+    return (
+      <View>
+        <View style={{flexDirection: 'row', backgroundColor: '#F4F4F4', borderRadius: 12, width: '95%', marginLeft: 10}}>
+          <Image
+            source={{uri: this.props.item.photoUrl}}
+            style={{width: 100, height: 100, margin: 5, borderRadius: 12}}
+          />
+          <View style={{height: 100, marginTop: 5}}>
+            <Text>{this.props.item.name}</Text>
+            <Text>{this.props.item.user.name}</Text>
 
+          </View>
+        </View>
+        <View style={{height: 3, backgroundColor: 'white'}}>
 
-        return (
-            <View>
-                <View style={{ flexDirection: 'row', backgroundColor: '#F4F4F4', borderRadius: 12, width: '95%', marginLeft: 10 }}>
-                    <Image
-                        source={{ uri: this.props.item.img }}
-                        style={{ width: 100, height: 100, margin: 5, borderRadius: 12 }}
-                    />
-                    <View style={{ height: 100, marginTop: 5 }}>
-                        <Text>{this.props.item.title}</Text>
-                        <Text>{this.props.item.author}</Text>
-
-                        <View style={{ flexDirection: 'row', marginTop: 35, justifyContent: 'space-between' }}>
-
-                            <Rating rating={3}/>
-
-                            <Icon name="bookmark-sharp" size={25} style={{ color: '#F1AE00', paddingLeft: 100 }} />
-                        </View>
-                    </View>
-
-                </View>
-
-                <View style={{ height: 3, backgroundColor: 'white' }}>
-
-                </View>
-            </View>
-        );
-    }
+        </View>
+      </View>
+    );
+  }
 }
 
 class Favoritos extends Component {
 
+  render() {
+    //NO FUNCIONA LA LLAMADA A LA API POR EL FORMATO EN GENERAL DE FAVORITOS... 
+    //CAMBIAR A COMO ESTÁN LAS DEMÁS SCREENS TIPO HOME, LOGIN, NEWACCOUNT...
+    //Error: Invalid hook call. Hooks can only be called inside of the body of a function component.
+    
+    //VER DE DONDE CONSEGUIR EL ID DEL USUARIO...
+    //
+    const [idUser, setUserId] = useState('');
+    const [favorites, setFavorites] = useState('');
+
+    useEffect(() =>{
+      const getFavorites = async () => {
+        const favoritesAPI = await getFavoriteRecipes(idUser);
+
+        setFavorites(favoritesAPI);
+
+        console.log(favoritesAPI);
+        
+        
+      }
+      getFavorites();
+    }, []);
+
+    return (
+      <View style={{flex: 1, paddingTop: StatusBar.currentHeight}}>
+        <NavBarSup />
+
+        <View style={{backgroundColor: '#EBEBAD'}}>
+          <Text style={{fontSize: 18, paddingLeft: 130}}>Tus Platos Favoritos</Text>
+        </View>
+
+        <View style={{height: 3, backgroundColor: 'white'}}>
+
+        </View>
+        <FlatList
+          data={favorites}
+          renderItem={({item, index}) => {
+            return (
+              <FlatListItem item={item} index={index} />
+            );
+          }}
+        />
+        <View style={{height: 50}}>
+
+        </View>
 
 
-    render() {
-
-        return (
-            <View style={{ flex: 1, paddingTop: StatusBar.currentHeight }}>
-                <NavBarSup />
-                
-                <View style={{ backgroundColor: '#EBEBAD' }}>
-                <Text style={{fontSize: 18, paddingLeft: 130}}>Tus Platos Favoritos</Text>
-                    <Stack spacing={2} style={{ margin: 16 }}>
-                        <RNPickerSelect
-                            placeholder={{ label: 'Seleccione un ingrediente', value: null }}
-                            onValueChange={(value) => console.log(value)}
-                            items={[
-                                { label: 'Football', value: 'football' },
-                                { label: 'Baseball', value: 'baseball' },
-                                { label: 'Hockey', value: 'hockey' },
-                            ]}
-                        />
-                        <TextInput
-                            variant="outlined"
-                            trailing={props => <Icon name="search" {...props} style={{ color: '#F1AE00' }} />}
-                            color='#F1AE00'
-                        />
-                    </Stack>
-                </View>
-
-                <View style={{ height: 3, backgroundColor: 'white' }}>
-
-                </View>
-                <FlatList
-                    data={itemData}
-                    renderItem={({ item, index }) => {
-
-                        return (
-                            <FlatListItem item={item} index={index} />
-                        );
-                    }}
-                />
-                <View style={{ height: 50 }}>
-
-                </View>
-
-
-                <NavBarInf />
-            </View>
-        )
-    }
+        <NavBarInf />
+      </View>
+    )
+  }
 };
 export default () => (
-    <IconComponentProvider IconComponent={MaterialCommunityIcons}>
-        <Favoritos />
-    </IconComponentProvider>
+  <IconComponentProvider IconComponent={MaterialCommunityIcons}>
+    <Favoritos />
+  </IconComponentProvider>
 );
+
+
+
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        paddingTop: StatusBar.currentHeight
-    },
-    itemStyle: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        height: 170,
-        flex: 1,
-        margin: 1,
-        height: WIDTH / numColumns
-    },
-    itemInvisible: {
-        backgroundColor: 'transparent'
-    }
+  container: {
+    flex: 1,
+    paddingTop: StatusBar.currentHeight
+  },
+  itemStyle: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 170,
+    flex: 1,
+    margin: 1,
+    height: WIDTH / numColumns
+  },
+  itemInvisible: {
+    backgroundColor: 'transparent'
+  }
 });
