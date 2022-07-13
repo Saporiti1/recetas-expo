@@ -15,6 +15,7 @@ const Receta = () => {
   const fullReceta = route.params.item;
   const ingredientes = fullReceta.recipeIngredientSet;
   const pasos = fullReceta.steps;
+  const [apretado, setApretado] = useState(false);
 
   const [selectedTab, setSelectedTab] = useState(0);
   
@@ -38,7 +39,7 @@ const Receta = () => {
             <Text style={{marginLeft: 5}}>{fullReceta.user.name}</Text>
           </View>
 
-          <Icon name="bookmark-outline" size={30} style={{color: '#F1AE00', right: 10}} />
+          <IconButton icon={ apretado ?  props => <Icon name="bookmark" size={30} style={{color: '#F1AE00'}} /> :  props => <Icon name="bookmark-outline" size={30} style={{color: '#F1AE00'}} />} onPress={() => setApretado((!apretado))}/>
         </View>
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
 

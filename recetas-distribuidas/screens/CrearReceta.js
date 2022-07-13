@@ -4,7 +4,7 @@ import { Icon, IconComponentProvider, Stack, TextInput, Box, IconButton, VStack 
 import MaterialCommunityIcons from "@expo/vector-icons/Ionicons";
 import { useNavigation } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
-import {Picker} from '@react-native-picker/picker';
+import { Picker } from '@react-native-picker/picker';
 
 
 
@@ -27,7 +27,7 @@ const CrearReceta = () => {
     const [valores, setValores] = useState([]);
     const [pasos, setPasos] = useState([]);
     const [image1, setImage1] = useState(null);
-    const [image4, setImage4] = useState(null);
+    const [image4, setImage4] = useState([]);
     const [filtro, setFiltro] = useState('');
 
 
@@ -47,39 +47,7 @@ const CrearReceta = () => {
             setImage1(result.uri);
         }
     };
-    const pickImage2 = async () => {
-        // No permissions request is necessary for launching the image library
-        let result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.All,
-            allowsEditing: true,
-            aspect: [4, 3],
-            quality: 1,
-        });
-
-        console.log(result);
-
-        if (!result.cancelled) {
-            setImage2(result.uri);
-        }
-    };
-
-    const pickImage3 = async () => {
-        // No permissions request is necessary for launching the image library
-        let result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.All,
-            allowsEditing: true,
-            aspect: [4, 3],
-            quality: 1,
-        });
-
-        console.log(result);
-
-        if (!result.cancelled) {
-            setImage3(result.uri);
-        }
-    };
-
-    const pickImage4 = async () => {
+    const pickImage4 = async (index) => {
         // No permissions request is necessary for launching the image library
         let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -91,7 +59,13 @@ const CrearReceta = () => {
         console.log(result.uri);
 
         if (!result.cancelled) {
-            setImage4(result.uri);
+            if (index >= image4.length){
+                setImage4([...image4, result.uri]);
+            } else {
+                const aux = image4.slice();
+                aux[index] = result.uri;
+                setImage4(aux);
+            }
         }
     };
 
@@ -108,10 +82,8 @@ const CrearReceta = () => {
                     <Box style={{ borderWidth: 3, backgroundColor: 'grey', borderRadius: 10 }}>
                         <IconButton icon={props => <Icon name="add-outline" size={40} />} onPress={pickImage1} />
                     </Box>
-                </Stack>
-                <View style={{ flexDirection: 'row', marginLeft: 10, marginTop: 3 }}>
                     <Image source={{ uri: image1 }} style={styles.image} />
-                </View>
+                </Stack>
             </View>
 
             <ScrollView contentContainerStyle={{ flexGrow: 1, }}>
@@ -142,10 +114,10 @@ const CrearReceta = () => {
                         {
                             pasos.map((v, i) =>
                                 <View style={{ marginLeft: 2, marginTop: 5, flexDirection: 'row', justifyContent: 'space-between' }}>
-                                    <Box style={{ borderWidth: 3, backgroundColor: 'grey', borderRadius: 10 }}>
-                                        <IconButton icon={props => <Icon name="add-outline" size={40} />} onPress={pickImage4} />
+                                    <Box style={{ borderWidth: 3, backgroundColor: 'grey', borderRadius: 10, marginBottom: 10 }}>
+                                        <IconButton icon={props => <Icon name="add-outline" size={40} />} onPress={() => pickImage4(i)} />
                                     </Box>
-                                    <Image source={{ uri: image4 }} style={styles.image} />
+                                    <Image source={{ uri: image4.length > i ? image4[i] : undefined}} style={styles.image} />
                                     <TextInput fullWidth id="descripcion_receta" hiddenLabel color='#F1AE00' multiline={true} style={{ marginRight: 10, width: '70%' }} placeholder='Explicacion' value={v.explicacion} onChange={(z) => {
                                         const aux = [...pasos]
                                         aux[i].explicacion = z.target.value
@@ -268,6 +240,8 @@ const styles = StyleSheet.create({
     image: {
         width: 50,
         height: 50,
-        marginRight: 10,
+        marginLeft: 5,
+        marginTop: 3,
+        marginRight: 5
     }
 });
