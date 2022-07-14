@@ -1,31 +1,37 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Image, TextInput, SafeAreaView, StyleSheet, Alert, Pressable, StatusBar, Modal } from 'react-native';
+import * as SecureStore from 'expo-secure-store';
 
 
 import { loginUser } from '../utils/recipesAPI';
-
 
 
 const Login = ({ navigation }) => {
   const [textUser, onChangeTextUser] = useState("");
   const [textPass, onChangeTextPass] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
+  const [result, setResult] = useState('(result)');
 
-  //const [aviso, setAviso] = useState('');
+  
+  async function saveValue(key, value) {
+    await SecureStore.setItemAsync(key, value);
+  }
+  async function getValue(key) {
+    let result = await SecureStore.getItemAsync(key);
+    console.log("DENTRO DEL GET: " + result + " " + key);
+    if(result) {
+      setResult(result);
+    }
+  }
 
 
   //ACA NO LE DOY CON EL USE EFFECT PERO FUNCIONA BIEN... IGUAL VERLO BIEN...
   const validateUser = async () => {
     const userDataAPI = await loginUser(textUser, textPass);
 
-    //console.log(userDataAPI);
-    if (userDataAPI == 200) {
-      //setAviso(<Alert severity="success">Todo en orden</Alert>);
-      setTimeout(() => {
-        navigation.navigate('Home');
-      }, 1000);
-    }
-    else {
+    //console.log("DATA EN EL LOGIN: " + userDataAPI.idUser);
+
+    if (userDataAPI == 404 || userDataAPI == 500) {
       Alert.alert(
         'ERROR',
         'Usuario y/o contraseña erroneos',
@@ -36,6 +42,14 @@ const Login = ({ navigation }) => {
           },
         ]
       );
+    }
+    else {
+      console.log("EL SAVE VALUE: " + userDataAPI.idUser);
+      saveValue("idUser", userDataAPI.idUser);
+      console.log("EL GET VALUE: " + getValue("idUser"));
+      setTimeout(() => {
+        navigation.navigate('Home');
+      }, 1000);
     }
   }
 

@@ -145,7 +145,9 @@ export const loginUser = async function (userName, userPass) {
     });
 
     if(response.status == 200) {
-      return 200;
+      let datax = await response.json();
+      //console.log(datax);
+      return datax;
     }
     else {
       //return response.status;
