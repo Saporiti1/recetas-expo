@@ -4,11 +4,12 @@ import { Box, Icon, IconComponentProvider } from "@react-native-material/core";
 import { Card, CardAction, CardImage } from 'react-native-material-cards';
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { useNavigation } from '@react-navigation/native';
-import Rating from '../components/Rating';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 import NavBarSup from '../components/NavBarSup';
 import NavBarInf from '../components/NavBarInf';
-import { searchRecipes } from '../utils/recipesAPI';
+import { searchRecipes, addFavoriteRecipe } from '../utils/recipesAPI';
 
 
 const starImgFilled = 'https://github.com/tranhonghan/images/blob/main/star_filled.png?raw=true';
@@ -27,9 +28,21 @@ const Home = () => {
   const [recipeOne, setRecipeOne] = useState('');
   const [recipeTwo, setRecipeTwo] = useState('');
   const [recipeThree, setRecipeThree] = useState('');
+  const [estado, setEstado] = useState(false);
+  const [userId, setUserId] = useState('');
+
+  const getData = async () => {
+    try {
+      const localData = await AsyncStorage.getItem('userData');
+      setUserId(JSON.parse(localData).idUser);
+      //console.log("si??? " + userId);
+    }catch (error) {
+     console.log(error); 
+    }
+  }
 
   useEffect(() =>{
-    const validateUser = async () => {
+    const loadScreen = async () => {
       const recipeDataApi = await searchRecipes()
       .then(
         (result) => {
@@ -47,13 +60,26 @@ const Home = () => {
           const avgRating = result[0].ratingSet.map(item => item.rating).reduce((a, b) => a + b, 0);
           setRating(Math.round(avgRating / result[0].ratingSet.length));
       });
-
       //setFoodData(recipeDataApi[0]);
     }
-    validateUser();
+    loadScreen();
   }, []);
 
-  //<Text>{recipesScroll[0].name}</Text>
+  const newFavorite = async () => {
+    const testtt = getData();
+    //console.log("aaaa " + userId + foodData.idRecipe);
+    
+    const resultAPI = addFavoriteRecipe(userId, foodData.idRecipe);
+    console.log(resultAPI);
+
+    if(estado) {
+      //ACÁ DEBERÍA PONER LA LLAMADA API PARA ELIMINAR LA RECETA DE FAVORITOS...
+      setEstado(false);
+    }else {
+      setEstado(true);
+    }
+  }
+  
 
   const CustomRatingBar = (foodRating) => {
     return (
@@ -109,8 +135,9 @@ const Home = () => {
             <CardAction separator={false} inColumn={false} style={{justifyContent: 'space-between'}}>
               <Text> {CustomRatingBar(foodRating)} </Text>
 
-              <Icon name="bookmark-outline" size={25} style={{marginRight: 10, color: '#F1AE00'}}/>
-
+              <TouchableOpacity onPress={newFavorite}>
+                <Icon name={estado? "bookmark" : "bookmark-outline"} size={25} style={{marginRight: 10, color: '#F1AE00'}}/>
+              </TouchableOpacity>
             </CardAction>
           </Card>
         </Box>

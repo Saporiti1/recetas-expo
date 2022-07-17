@@ -1,34 +1,29 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Component } from 'react';
 import { View, Text, Image, TextInput, SafeAreaView, StyleSheet, Alert, Pressable, StatusBar, Modal } from 'react-native';
-import * as SecureStore from 'expo-secure-store';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 import { loginUser } from '../utils/recipesAPI';
 
 
-const Login = ({ navigation }) => {
+const Login = ({navigation}) => {
   const [textUser, onChangeTextUser] = useState("");
   const [textPass, onChangeTextPass] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
-  const [result, setResult] = useState('(result)');
+  //const [result, setResult] = useState('');
 
-  
-  async function saveValue(key, value) {
-    await SecureStore.setItemAsync(key, value);
-  }
-  async function getValue(key) {
-    let result = await SecureStore.getItemAsync(key);
-    console.log("DENTRO DEL GET: " + result + " " + key);
-    if(result) {
-      setResult(result);
+  /*const saveData = async () => {
+    try {
+      await AsyncStorage.setItem('idUser', '5');
+      //console.log("si???" + await AsyncStorage.getItem('idUser'));
+    }catch (error) {
+     console.log(error); 
     }
   }
-
-
-  //ACA NO LE DOY CON EL USE EFFECT PERO FUNCIONA BIEN... IGUAL VERLO BIEN...
+  saveData();*/
+  
   const validateUser = async () => {
     const userDataAPI = await loginUser(textUser, textPass);
-
     //console.log("DATA EN EL LOGIN: " + userDataAPI.idUser);
 
     if (userDataAPI == 404 || userDataAPI == 500) {
@@ -44,9 +39,13 @@ const Login = ({ navigation }) => {
       );
     }
     else {
-      console.log("EL SAVE VALUE: " + userDataAPI.idUser);
-      saveValue("idUser", userDataAPI.idUser);
-      console.log("EL GET VALUE: " + getValue("idUser"));
+      //console.log(JSON.stringify(userDataAPI));
+      try {
+        await AsyncStorage.setItem('userData', JSON.stringify(userDataAPI));
+        console.log("userData LOGIN: " + await AsyncStorage.getItem('userData'));
+      }catch (error) {
+       console.log(error); 
+      }
       setTimeout(() => {
         navigation.navigate('Home');
       }, 1000);
@@ -92,6 +91,7 @@ const Login = ({ navigation }) => {
           <Pressable onPress={() => navigation.navigate('ResetPassword')} title="Login" >
             <Text style={styles.textMeOlvideContra}>Me olvide la Contraseña</Text>
           </Pressable>
+          
 
           <View style={{ display: 'flex', height: '100%' }}>
             <View style={{ display: 'flex', marginTop: 50 }}>
