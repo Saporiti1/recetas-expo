@@ -9,7 +9,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import NavBarSup from '../components/NavBarSup';
 import NavBarInf from '../components/NavBarInf';
-import { searchRecipes, addFavoriteRecipe } from '../utils/recipesAPI';
+import { searchRecipes, addFavoriteRecipe, deleteFavoriteRecipe } from '../utils/recipesAPI';
 
 
 const starImgFilled = 'https://github.com/tranhonghan/images/blob/main/star_filled.png?raw=true';
@@ -42,6 +42,7 @@ const Home = () => {
   }
 
   useEffect(() =>{
+    getData();
     const loadScreen = async () => {
       const recipeDataApi = await searchRecipes()
       .then(
@@ -53,7 +54,7 @@ const Home = () => {
           //setRecipesScroll(result.slice(0,3));
 
           //NO DEBERÍA DIVIDIRLO EN 3... PERO BUENO...
-          setRecipeOne(result[0]);
+          setRecipeOne(result[0]); 
           setRecipeTwo(result[1]);
           setRecipeThree(result[2]);
 
@@ -66,16 +67,14 @@ const Home = () => {
   }, []);
 
   const newFavorite = async () => {
-    const testtt = getData();
     //console.log("aaaa " + userId + foodData.idRecipe);
-    
-    const resultAPI = addFavoriteRecipe(userId, foodData.idRecipe);
-    console.log(resultAPI);
-
     if(estado) {
-      //ACÁ DEBERÍA PONER LA LLAMADA API PARA ELIMINAR LA RECETA DE FAVORITOS...
+      const deleteFav = await deleteFavoriteRecipe(userId, foodData.idRecipe);
+      //console.log(deleteFav);
       setEstado(false);
     }else {
+      const resultAPI = await addFavoriteRecipe(userId, foodData.idRecipe);
+      //console.log("HOME: " + resultAPI);
       setEstado(true);
     }
   }

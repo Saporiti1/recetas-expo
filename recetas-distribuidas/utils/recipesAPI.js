@@ -195,7 +195,7 @@ export const searchRecipes = async function () {
 export const searchSomeRecipes = async function (filtro, inputSearch) {
   let url = urlWebServices.searchRecipes + '?filterBy=' + filtro + '&value=' + inputSearch;
 
-  console.log(url);
+  //console.log(url);
   try {
     let response = await fetch(url, {
       method: 'GET',

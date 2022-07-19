@@ -1,20 +1,18 @@
-import React, { useState, Component } from 'react';
-import { View, Text, Image, StyleSheet, FlatList, TouchableOpacity, StatusBar } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, Image, StyleSheet, TouchableOpacity, StatusBar } from 'react-native';
 import { Stack, Icon, IconComponentProvider, TextInput, IconButton } from "@react-native-material/core";
 import MaterialCommunityIcons from "@expo/vector-icons/Ionicons";
 import {Picker} from '@react-native-picker/picker';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 import NavBarSup from '../components/NavBarSup';
 import NavBarInf from '../components/NavBarInf';
-import { searchSomeRecipes } from '../utils/recipesAPI';
+import { searchSomeRecipes, addFavoriteRecipe, deleteFavoriteRecipe } from '../utils/recipesAPI';
 
 const starImgFilled = 'https://github.com/tranhonghan/images/blob/main/star_filled.png?raw=true';
 const starImgCorner = 'https://github.com/tranhonghan/images/blob/main/star_corner.png?raw=true';
-
-
-//ESTO Y EL FLATLIST NO ME SIRVEN, NECESITO ENVIARLE MÁS PARÁMETROS... 
 
 
 const Busqueda = () => {
@@ -22,16 +20,15 @@ const Busqueda = () => {
   const [filtro, setFiltro] = useState('');
   const [inputSearch, setInputSearch] = useState('');
   const [recipesScroll, setRecipesScroll] = useState([]);
+  const [estado, setEstado] = useState(false);
+  const [userId, setUserId] = useState('');
 
-
-  //VER BIEN ESTO...
   const buscarRecetas = async () => {
     const recipeDataApi = await searchSomeRecipes(filtro, inputSearch);
     setRecipesScroll(recipeDataApi);
-    console.log(recipeDataApi.length);
+    //console.log(recipeDataApi.length);
   }
 
-  //VER BIEN ESTO...
   /*useEffect(() => {
     buscarRecetas();
   }, [])*/
@@ -40,6 +37,35 @@ const Busqueda = () => {
     const avgRating = ratingReceta.map(item => item.rating).reduce((a, b) => a + b, 0);
     return Math.round(avgRating / ratingReceta.length);
   }
+
+  
+  const getData = async () => {
+    try {
+      const localData = await AsyncStorage.getItem('userData');
+      setUserId(JSON.parse(localData).idUser);
+      //console.log("BUSQUEDAAAAAAAAAAA: " + userId);
+    }catch (error) {
+     console.log(error); 
+    }
+  }
+  useEffect(() => {
+    getData();
+  }, [])
+  const newFavorite = async (idRecipe) => {
+    getData();
+    if(estado) {
+      const deleteFav = await deleteFavoriteRecipe(userId, idRecipe);
+      //console.log(deleteFav);
+      setEstado(false);
+    }else {
+      const resultAPI = await addFavoriteRecipe(userId, idRecipe);
+      //console.log("BUSQUEDA: " + resultAPI);
+      setEstado(true);
+    }
+  }
+  //CUANDO LE DOY FAVORITO A UNA RECETA, LAS DEMÁS TAMBIÉN SE CAMBIAN PORQUE LA VARIABLE ESTADO
+  //PASÓ A TRUE... ENTONCES TODAS SE CAMBIAN TAMBIÉN... IGUAL ESO NO QUIERE DECIR QUE SE AGREGARON
+  //COMO FAVORITAS... SOLA A LA QUE SE LE DIÓ CLICK...
 
 
   return (
@@ -86,7 +112,10 @@ const Busqueda = () => {
                 <View style={{flexDirection: 'row', marginTop: 35, justifyContent: 'space-between'}}>
                   <Text style={{width: '65%'}}>{ratingPromedio(item.ratingSet)}</Text>
 
-                  <Icon name="bookmark-sharp" size={25} style={{color: '#F1AE00'}} />
+                  <TouchableOpacity onPress={() => newFavorite(item.idRecipe)}>
+                    <Icon name={estado? "bookmark" : "bookmark-outline"} size={25} style={{color: '#F1AE00'}}/>
+                  </TouchableOpacity>
+                  
                 </View>
               </View>
               <View style={{height: 3, backgroundColor: '#F4F4F4'}} />

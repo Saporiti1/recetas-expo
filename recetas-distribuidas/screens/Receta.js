@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Image, Pressable, ScrollView, StyleSheet, StatusBar, FlatList, TouchableOpacity } from 'react-native';
 import { Icon, IconComponentProvider, IconButton, Text, VStack } from "@react-native-material/core";
 import MaterialCommunityIcons from "@expo/vector-icons/Ionicons";
 import { useNavigation, useRoute } from '@react-navigation/native';
 import MaterialTabs from 'react-native-material-tabs';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import Carousell from '../components/Carousell';
 import Rating from '../components/Rating';
+import { addFavoriteRecipe, deleteFavoriteRecipe } from '../utils/recipesAPI';
 
 
 const Receta = () => {
@@ -15,13 +17,38 @@ const Receta = () => {
   const fullReceta = route.params.item;
   const ingredientes = fullReceta.recipeIngredientSet;
   const pasos = fullReceta.steps;
-  const [apretado, setApretado] = useState(false);
-
+  const [estado, setEstado] = useState(false);
   const [selectedTab, setSelectedTab] = useState(0);
+  const [userId, setUserId] = useState('');
   
   const ratingPromedio = (ratingReceta) => {
     const avgRating = ratingReceta.map(item => item.rating).reduce((a, b) => a + b, 0);
     return Math.round(avgRating / ratingReceta.length);
+  }
+
+  const getData = async () => {
+    try {
+      const localData = await AsyncStorage.getItem('userData');
+      setUserId(JSON.parse(localData).idUser);
+      //console.log( );
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  useEffect(() => {
+    getData();
+  }, [])
+  const newFavorite = async (idRecipe) => {
+    getData();
+    if(estado) {
+      const deleteFav = await deleteFavoriteRecipe(userId, idRecipe);
+      //console.log(deleteFav);
+      setEstado(false);
+    }else {
+      const resultAPI = await addFavoriteRecipe(userId, idRecipe);
+      //console.log("BUSQUEDA: " + resultAPI);
+      setEstado(true);
+    }
   }
 
   return (
@@ -39,7 +66,7 @@ const Receta = () => {
             <Text style={{marginLeft: 5}}>{fullReceta.user.name}</Text>
           </View>
 
-          <IconButton icon={ apretado ?  props => <Icon name="bookmark" size={30} style={{color: '#F1AE00'}} /> :  props => <Icon name="bookmark-outline" size={30} style={{color: '#F1AE00'}} />} onPress={() => setApretado((!apretado))}/>
+          <IconButton icon={estado?  props => <Icon name="bookmark" size={30} style={{color: '#F1AE00'}} /> :  props => <Icon name="bookmark-outline" size={30} style={{color: '#F1AE00'}} />} onPress={() => newFavorite(fullReceta.idRecipe)}/>
         </View>
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
 
